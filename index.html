@@ -146,8 +146,8 @@ var DAYS=[
   {k:"a partir das 15h",t:"Check-in · La Planque",b:"Se o quarto não estiver pronto, deixem as malas e vão almoçar. Café da manhã incluído. M° Goncourt (linha 11), 3 min a pé.",addr:"3 Rue Arthur Groussier, 75010 Paris",maps:"La Planque Hotel 3 Rue Arthur Groussier 75010 Paris",
    hist:"Você está num pedaço de Paris que Napoleão mandou cavar: o Canal Saint-Martin foi aberto a partir de 1802 pra trazer água limpa e escoar mercadorias. Suas eclusas e passarelas de ferro arqueadas viraram cartão-postal — e cenário do filme Amélie Poulain. Hoje o 10e é descolado, de parisienses de verdade.",
    foto:"Pare numa das passarelas giratórias de ferro: quando uma barcaça passa pela eclusa, a ponte ainda gira pra liberar o caminho — engenharia do século XIX viva até hoje."},
-  {k:"tarde",t:"Primeira tarde a dois",b:"Caminhada leve pelo Canal (Quai de Valmy), um café na beira, e se o corpo aguentar, um pôr do sol na Île Saint-Louis com sorvete Berthillon. Sem forçar.",maps:"Quai de Valmy Canal Saint-Martin 75010 Paris"},
-  {k:"noite",t:"Jantar simples, dormir cedo",b:"Não force hoje. Amanhã o corpo já acorda no fuso de Paris."}
+  {k:"tarde",t:"A primeira tarde: o Canal Saint-Martin",dek:"Por que aqui? É o passeio mais bonito a 5 min do hotel — sentir Paris sem cansar no jet lag.",photo:"img/canal.jpg",b:"Caminhada leve pela beira d'água, começando no Quai de Valmy: as pontes de ferro, as eclusas, os parisienses sentados na margem com uma garrafa de vinho. Pare num café e deixe o corpo entender que chegou.",hist:"Boa parte do canal corre escondida — a partir da Bastille ele mergulha num túnel de 2 km sob a cidade. Os barcos vencem 25 metros de desnível subindo uma 'escada de água' feita de eclusas. À beira fica o Hôtel du Nord (1885), que virou lenda do cinema francês. É o passeio preferido dos parisienses no fim da tarde.",foto:"As passarelas de ferro que GIRAM pra deixar a barcaça passar pela eclusa — engenharia de 1820 funcionando até hoje.",maps:"Quai de Valmy Canal Saint-Martin 75010 Paris"},
+  {k:"noite",t:"A primeira noite: a Torre Eiffel",dek:"Por que aqui? Não há estreia melhor em Paris do que ver a Torre acender na primeira noite. Vale o cansaço.",photo:"img/eiffel.jpg",b:"No fim da tarde, vão de metrô ao Trocadéro: do terraço, a Torre aparece inteira do outro lado do Sena. Fiquem pro escurecer — a cada hora cheia ela cintila por 5 minutos. É a foto da vida de vocês. Depois, táxi direto pro hotel.",hist:"Construída em 1889 para a Exposição do centenário da Revolução, a Torre era pra ser TEMPORÁRIA, desmontada em 20 anos. Trezentos artistas assinaram um manifesto contra ela; o que a salvou foi a antena de rádio no topo. Hoje, 20 mil lâmpadas a fazem cintilar.",foto:"Do terraço do Trocadéro, a Torre emoldurada entre as duas alas do Palais de Chaillot — o ângulo clássico. Fique no lado direito da esplanada pra fugir da multidão.",maps:"Place du Trocadero 75116 Paris"}
  ],phrase:{fr:"Bonjour ! Une table pour deux, s'il vous plaît.",pt:"Olá! Uma mesa para dois, por favor."}},
 
 {n:2,wd:"Domingo · 28 jun",hero:"img/place-des-vosges.png",tag:"Livre a dois + garimpo",title:"O Marais, devagar",
@@ -346,7 +346,7 @@ var PHRASES={
 };
 
 var TRANSIT={
-1:["","Da fila oficial 'Taxis' (placa branca), táxi tarifa FIXA €44 até o hotel (~40 min, malas incluídas) — o mais fácil no 1º dia. Mais barato (~€13): Metrô L14 (dir. Saint-Denis Pleyel) até Châtelet → L11 (dir. Rosny-Bois-Perrier) até Goncourt. Nunca aceite corrida oferecida dentro do saguão.","","A pé: desça a Rue Arthur Groussier, vire à direita, ~8 min até o Quai de Valmy. Sem metrô.","Tudo a pé pelo bairro (5–12 min). À noite volte por ruas movimentadas; se tarde, táxi curto ~€10."],
+1:["","Da fila oficial 'Taxis' (placa branca), táxi tarifa FIXA €44 até o hotel (~40 min, malas incluídas) — o mais fácil no 1º dia. Mais barato (~€13): Metrô L14 (dir. Saint-Denis Pleyel) até Châtelet → L11 (dir. Rosny-Bois-Perrier) até Goncourt. Nunca aceite corrida oferecida dentro do saguão.","","A pé: desça a Rue Arthur Groussier, vire à direita, ~8 min até o Quai de Valmy. Sem metrô.","Do hotel: a pé até República (~7 min) → L9 (dir. Pont de Sèvres) DIRETO até Trocadéro (~25 min). VOLTA À NOITE: não pegue metrô vazio tarde da noite — chame um táxi/Uber direto do Trocadéro ao hotel (~€20–25, ~20 min, porta a porta e seguro)."],
 2:["Do hotel: a pé até République (5 min) → L8 (dir. Créteil) até Bastille (3 paradas) → 6 min a pé até a praça.","Tudo a pé pelo Marais: Place des Vosges → rue des Rosiers → rue de la Verrerie (10–15 min). Seguro de dia.","Da rue de la Verrerie: Hôtel de Ville → L1 (dir. La Défense) até Franklin D. Roosevelt → L9 (dir. Pont de Sèvres) até Alma-Marceau (~25 min); 4 min a pé até o cais. À NOITE, volte de táxi/Uber do cais ao hotel (~€20–25)."],
 3:["Do hotel: a pé até République → L11 (dir. Châtelet), 1 parada → Châtelet → L1 (dir. La Défense) até George V (~25 min); suba a Av. de la Grande Armée ~8 min até o nº 58.","Do nº 58, ~7 min a pé até o Arco. Atravesse pela PASSAGEM SUBTERRÂNEA (nunca a rotatória).","Tudo a pé: desça a Champs-Élysées (~20 min, ladeira leve), passando pelo Grand Palais. Seguro de dia.","A pé até a Concorde (~5 min) e pelas Tulherias até o Louvre (~15 min). Pra poupar as pernas: L1 (Concorde, dir. Vincennes) 1 parada até Palais Royal–Louvre.","Reencontro: do Louvre, L1 (dir. La Défense) até Franklin D. Roosevelt (3 min até o nº 23). VOLTA: L1 até Châtelet → L11 (dir. Rosny) até Goncourt. À noite, táxi ~€18."],
 4:["Do hotel: a pé até République → L8 (dir. Balard) até Opéra (6 paradas, ~12 min) → 4 min a pé até a Place Vendôme.","","Tudo a pé: da Place Vendôme pela Rue des Petits-Champs até a Galerie Vivienne (~8 min); a Salle Ovale fica colada (2 min).","Da Vivienne: Quatre-Septembre → L3 (dir. Pont de Levallois) até Havre-Caumartin (2 paradas); Printemps a 2 min. VOLTA: L9 (dir. Montreuil) até République. Com sacolas, táxi ~€15."],
@@ -367,16 +367,24 @@ var MERGULHE={
 8:{"Notre-Dame de Paris":"A construção começou em 1163 e levou quase 200 anos. Foi aqui que Napoleão se coroou imperador em 1804, arrancando a coroa das mãos do Papa pra pôr ele mesmo. No século XIX a catedral estava em ruínas e quase foi demolida — quem a salvou foi Victor Hugo, com 'O Corcunda de Notre-Dame' (1831), que reacendeu o orgulho nacional. Na praça em frente, uma placa de bronze marca o 'Ponto Zero': é dali que se medem TODAS as distâncias rodoviárias da França.","Sainte-Chapelle":"Luís IX, o único rei francês virado santo (São Luís), pagou uma fortuna ao imperador de Constantinopla pela Coroa de Espinhos — e a relíquia custou quase TRÊS VEZES mais do que construir esta capela inteira pra guardá-la. Erguida em tempo recorde (1242–1248), é o auge do gótico radiante: 15 m de vitrais com mais de mil cenas, sobre nervuras tão finas que parecem desafiar a gravidade. A relíquia hoje está no Louvre — foi resgatada do incêndio de Notre-Dame."},
 9:{"Musée d'Orsay":"A Gare d'Orsay abriu para a Exposição de 1900 como a primeira estação de trem do mundo movida a eletricidade. Mas em poucas décadas suas plataformas ficaram curtas pros trens modernos e ela foi desativada — quase virou hotel, quase foi demolida. Foi salva nos anos 1970 (logo depois de Paris lamentar ter destruído o mercado de Les Halles) e reaberta como museu em 1986.","Sacré-Cœur + Montmartre":"A basílica foi um 'voto nacional' após a derrota para a Prússia em 1870 e a sangrenta Comuna de 1871 — muitos a veem como monumento político, erguido pra 'expiar' os pecados da França, justo onde a Comuna começou. A pedra é um travertino que, com a chuva, libera calcita e se autobranqueia — por isso nunca escurece. Lá dentro está um dos maiores mosaicos do mundo e o sino Savoyarde, de 19 toneladas."}
 };
+var PHOTOS={
+4:{"Galerie Vivienne + Salle Ovale":"img/galerie-vivienne.jpg"},
+5:{"Bourse de Commerce — Tadao Ando":"img/bourse.jpg","Saint-Eustache + La Samaritaine":"img/saint-eustache.jpg","Rue Montorgueil":"img/montorgueil.jpg"},
+6:{"Cité de l'Architecture":"img/chaillot.jpg","Reencontro no Palais de Tokyo":"img/palais-tokyo.jpg"},
+7:{"Maison La Roche — Le Corbusier":"img/maison-la-roche.jpg"},
+8:{"Pavillon de l'Arsenal":"img/arsenal.jpg"},
+9:{"Musée d'Orsay":"img/orsay.jpg"}
+};
 function mh(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
 function el(id){return document.getElementById(id);}
 function setbar(t,back){el('bt').textContent=t;el('back').style.display=back?'inline-block':'none';}
 function go(fn){window.scrollTo(0,0);fn();}
 function dayMapUrl(d){var pts=[];d.blocks.forEach(function(b){if(b.maps)pts.push(encodeURIComponent(b.maps));});return "https://www.google.com/maps/dir/"+pts.join('/');}
 
-function blockHTML(b,tr,route,openD,mg){
+function blockHTML(b,tr,route,openD,mg,ph){
  var h='<article class="stop"><span class="num">'+(b.k||'')+'</span><h2>'+b.t+'</h2>';
  if(b.dek)h+='<div class="dek">'+b.dek+'</div>';
- if(b.photo)h+='<figure><img src="'+b.photo+'" alt="'+b.t+'" loading="lazy"></figure>';
+ if(ph)h+='<figure><img src="'+ph+'" alt="'+b.t+'" loading="lazy"></figure>';
  if(b.b)h+='<p>'+b.b+'</p>';
  if(b.hist)h+='<div class="breathe"><div class="bl">✦ Respire a história</div><p>'+b.hist+'</p></div>';
  if(mg)h+='<details class="dive"'+(openD?' open':'')+'><summary>📖 Mergulhe — a história a fundo</summary><div class="htext">'+mg+'</div></details>';
@@ -394,7 +402,7 @@ function openDay(n){
  h+='<div class="col"><p class="intro">'+d.intro+'</p><div class="goldline">🌇 Em julho o sol se põe só ~22h — a tarde rende. ✨ Após escurecer, a Torre Eiffel cintila 5 min a cada hora cheia.</div>';
  h+='<div class="daybtns"><button onclick="openMapaDia('+n+')">🗺️ ver o dia no mapa</button></div>';
  var HQ="La Planque Hotel 3 Rue Arthur Groussier 75010 Paris";
- d.blocks.forEach(function(b,i){var tr=(TRANSIT[d.n]||[])[i]||'';var route='';if(b.maps){var orig=(i>0&&d.blocks[i-1].maps)?d.blocks[i-1].maps:HQ;route="https://www.google.com/maps/dir/"+encodeURIComponent(orig)+"/"+encodeURIComponent(b.maps);}h+=blockHTML(b,tr,route,false,(MERGULHE[d.n]||{})[b.t]);});
+ d.blocks.forEach(function(b,i){var tr=(TRANSIT[d.n]||[])[i]||'';var route='';if(b.maps){var orig=(i>0&&d.blocks[i-1].maps)?d.blocks[i-1].maps:HQ;route="https://www.google.com/maps/dir/"+encodeURIComponent(orig)+"/"+encodeURIComponent(b.maps);}h+=blockHTML(b,tr,route,false,(MERGULHE[d.n]||{})[b.t],(b.photo||(PHOTOS[d.n]||{})[b.t]));});
  h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><button class="play" data-say="'+d.phrase.fr+'" style="margin-top:10px;width:auto;border-radius:40px;padding:9px 18px;font-size:13px">🔊 ouvir</button><div class="hpt">'+d.phrase.pt+'</div></div>';
  var p=DAYS.find(function(x){return x.n===n-1;}),nx=DAYS.find(function(x){return x.n===n+1;});
  h+='<div class="daybtns">'+(p?'<button onclick="go(function(){openDay('+(n-1)+')})">← Dia '+(n-1)+'</button>':'<span style="flex:1"></span>')+(nx?'<button onclick="go(function(){openDay('+(n+1)+')})">Dia '+(n+1)+' →</button>':'<span style="flex:1"></span>')+'</div>';
@@ -430,7 +438,7 @@ function printFrasario(){var h='<p style="font-size:14px"><b>'+PHRASES.hero.fr+'
 function renderPrint(){
  setbar('Versão para PDF',true);
  var h='<div class="col"><button class="printbtn" onclick="window.print()">🖨️ Salvar como PDF (ou imprimir)</button>';
- DAYS.forEach(function(d){h+='<section class="pday"><img class="phero" src="'+d.hero+'" alt=""><div class="kick">Dia '+d.n+' · '+d.wd+'</div><h1 class="ptitle">'+d.title+'</h1><div class="pwx">'+d.wx.t+' · '+d.wx.r+' · '+d.wx.wear+'</div><p class="intro">'+d.intro+'</p>';d.blocks.forEach(function(b,i){h+=blockHTML(b,(TRANSIT[d.n]||[])[i]||'','',true,(MERGULHE[d.n]||{})[b.t]);});h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><div class="hpt">'+d.phrase.pt+'</div></div></section>';});
+ DAYS.forEach(function(d){h+='<section class="pday"><img class="phero" src="'+d.hero+'" alt=""><div class="kick">Dia '+d.n+' · '+d.wd+'</div><h1 class="ptitle">'+d.title+'</h1><div class="pwx">'+d.wx.t+' · '+d.wx.r+' · '+d.wx.wear+'</div><p class="intro">'+d.intro+'</p>';d.blocks.forEach(function(b,i){h+=blockHTML(b,(TRANSIT[d.n]||[])[i]||'','',true,(MERGULHE[d.n]||{})[b.t],(b.photo||(PHOTOS[d.n]||{})[b.t]));});h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><div class="hpt">'+d.phrase.pt+'</div></div></section>';});
  h+='<section class="pday"><h1 class="ptitle">Frasário</h1><div class="ess">'+printFrasario()+'</div></section>';
  h+='<section class="pday"><h1 class="ptitle">Essencial</h1><div class="ess">'+ESSHTML.reservas+ESSHTML.metro+ESSHTML.mala+ESSHTML.seguranca+ESSHTML.apps+'</div></section>';
  h+='</div>';el('app').innerHTML=h;window.scrollTo(0,0);
