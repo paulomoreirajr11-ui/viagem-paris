@@ -114,6 +114,16 @@
   .dive .htext{font-size:13.5px;color:#34312a;line-height:1.7;margin-top:7px}
   body.dark .dive .htext{color:#d8d2c6}
   body.dark .dive>summary{color:#b9a3e0}
+  .extras{margin:24px 0 4px;padding-top:16px;border-top:2px solid var(--accent)}
+  .extras .eh{font-family:Georgia,serif;font-size:18px}
+  .extras .es{font-size:12.5px;color:var(--muted);margin:2px 0 12px}
+  .xcard{display:flex;gap:0;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:9px 0}
+  .xcard img{width:100px;flex:none;object-fit:cover}
+  .xcard .xi{flex:1;padding:10px 13px;min-width:0}
+  .xcard .xt{font-weight:600;font-size:14.5px;line-height:1.2}
+  .xcard .xw{font-size:12.5px;color:var(--muted);line-height:1.45;margin:4px 0 7px}
+  .xcard a{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);font-weight:600;text-decoration:none}
+  body.dark .xcard .xw{color:#a8a294}
   #gohome{position:fixed;right:14px;bottom:16px;z-index:40;background:var(--ink);color:#fff;text-decoration:none;padding:11px 16px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.28)}
   @media print{#gohome{display:none}}
   .goldline{font-size:12.5px;color:var(--gold);background:var(--card);border:1px solid var(--line);border-radius:3px;padding:9px 12px;margin:8px 0 2px;line-height:1.5}
@@ -372,6 +382,17 @@ var PHOTOS={
 8:{"Pavillon de l'Arsenal":"img/arsenal.jpg"},
 9:{"Musée d'Orsay":"img/orsay.jpg"}
 };
+var EXTRAS={
+1:[{t:"Galeries Lafayette — cúpula + terraço",why:"A cúpula art nouveau de vidro (1912) e o terraço com vista 360° de Paris — de graça.",photo:"img/galeries-lafayette.jpg",maps:"Galeries Lafayette Haussmann Paris"},{t:"Jardim das Tulherias + margem do Sena",why:"A caminhada clássica do Louvre à Concorde pelo jardim, descendo pra beira do rio no fim da tarde.",photo:"img/tuileries.jpg",maps:"Jardin des Tuileries Paris"},{t:"Île Saint-Louis + sorvete Berthillon",why:"A ilha mais charmosa do Sena e o sorvete mais famoso de Paris, com a Notre-Dame ali do lado ao entardecer.",photo:"img/ile-saint-louis.jpg",maps:"Île Saint-Louis Paris"}],
+2:[{t:"Coulée verte (Promenade Plantée)",why:"O parque suspenso sobre um viaduto de trem — inspirou o High Line de Nova York. Começa perto da Bastille.",photo:"img/coulee-verte.jpg",maps:"Coulée verte René-Dumont Paris"}],
+3:[{t:"Musée de l'Orangerie — Ninfeias de Monet",why:"As oito telas gigantes de Monet em duas salas ovais feitas sob medida pra elas. Fica nas Tulherias, na sua rota. ~€12,50.",photo:"img/orangerie.jpg",maps:"Musée de l'Orangerie Paris"}],
+4:[{t:"Galeries Lafayette — cúpula + terraço",why:"Coladinho no Printemps: a cúpula de vidro e o terraço grátis com vista de Paris.",photo:"img/galeries-lafayette.jpg",maps:"Galeries Lafayette Haussmann Paris"},{t:"Palais Garnier por dentro",why:"A grande escadaria de mármore e o teto pintado por Chagall. A ópera que inspirou 'O Fantasma'. ~€15.",photo:"img/palais-garnier.jpg",maps:"Palais Garnier Opera Paris"}],
+5:[{t:"Jardin du Palais-Royal — colunas de Buren",why:"O pátio com as colunas listradas de Buren (1986) — a foto preferida dos parisienses, a 5 min do Louvre.",photo:"img/palais-royal.jpg",maps:"Jardin du Palais-Royal Paris"}],
+6:[{t:"Champ de Mars — sob a Torre Eiffel",why:"Depois do Trocadéro, atravesse o rio e fique no gramado EMBAIXO da Torre. Outro ângulo, igualmente mágico.",photo:"img/eiffel.jpg",maps:"Champ de Mars Paris"}],
+8:[{t:"Conciergerie",why:"A prisão da Revolução, onde Maria Antonieta passou os últimos dias antes da guilhotina. Colada na Sainte-Chapelle (combo €28).",photo:"img/conciergerie.jpg",maps:"Conciergerie Paris"},{t:"Shakespeare and Company",why:"A livraria mais famosa de Paris, de frente pra Notre-Dame — reduto de Hemingway e da geração perdida.",photo:"img/shakespeare.jpg",maps:"Shakespeare and Company 37 Rue de la Bucherie Paris"}],
+9:[{t:"Musée Rodin + jardim",why:"O Pensador no jardim de roseiras, num palacete do séc. XVIII, a 10 min do Orsay. Só o jardim ~€4.",photo:"img/rodin.jpg",maps:"Musée Rodin Paris"},{t:"Café de Flore (Saint-Germain)",why:"O café dos filósofos (Sartre e Beauvoir), perto do Bon Marché. Um expresso na calçada, sentindo o bairro.",photo:"img/cafe-flore.jpg",maps:"Café de Flore Saint-Germain Paris"}]
+};
+function extrasHTML(n){var x=EXTRAS[n];if(!x)return '';var h='<div class="extras"><div class="eh">✨ Se der pique — extras na rota</div><div class="es">Opcionais pertinho do seu caminho. Olhe a foto e decidam na hora.</div>';x.forEach(function(e){h+='<div class="xcard"><img src="'+e.photo+'" alt="'+e.t+'" loading="lazy"><div class="xi"><div class="xt">'+e.t+'</div><div class="xw">'+e.why+'</div><a href="'+mh(e.maps)+'" target="_blank" rel="noopener">📍 abrir no mapa</a></div></div>';});return h+'</div>';}
 function mh(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
 function el(id){return document.getElementById(id);}
 function setbar(t,back){el('bt').textContent=t;el('back').style.display=back?'inline-block':'none';}
@@ -400,6 +421,7 @@ function openDay(n){
  h+='<div class="daybtns"><button onclick="openMapaDia('+n+')">🗺️ ver o dia no mapa</button></div>';
  var HQ="La Planque Hotel 3 Rue Arthur Groussier 75010 Paris";
  d.blocks.forEach(function(b,i){var tr=(TRANSIT[d.n]||[])[i]||'';var route='';if(b.maps){var orig=(i>0&&d.blocks[i-1].maps)?d.blocks[i-1].maps:HQ;route="https://www.google.com/maps/dir/"+encodeURIComponent(orig)+"/"+encodeURIComponent(b.maps);}h+=blockHTML(b,tr,route,false,(MERGULHE[d.n]||{})[b.t],(b.photo||(PHOTOS[d.n]||{})[b.t]));});
+ h+=extrasHTML(d.n);
  h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><button class="play" data-say="'+d.phrase.fr+'" style="margin-top:10px;width:auto;border-radius:40px;padding:9px 18px;font-size:13px">🔊 ouvir</button><div class="hpt">'+d.phrase.pt+'</div></div>';
  var p=DAYS.find(function(x){return x.n===n-1;}),nx=DAYS.find(function(x){return x.n===n+1;});
  h+='<div class="daybtns">'+(p?'<button onclick="go(function(){openDay('+(n-1)+')})">← Dia '+(n-1)+'</button>':'<span style="flex:1"></span>')+(nx?'<button onclick="go(function(){openDay('+(n+1)+')})">Dia '+(n+1)+' →</button>':'<span style="flex:1"></span>')+'</div>';
@@ -435,7 +457,7 @@ function printFrasario(){var h='<p style="font-size:14px"><b>'+PHRASES.hero.fr+'
 function renderPrint(){
  setbar('Versão para PDF',true);
  var h='<div class="col"><button class="printbtn" onclick="window.print()">🖨️ Salvar como PDF (ou imprimir)</button>';
- DAYS.forEach(function(d){h+='<section class="pday"><img class="phero" src="'+d.hero+'" alt=""><div class="kick">Dia '+d.n+' · '+d.wd+'</div><h1 class="ptitle">'+d.title+'</h1><div class="pwx">'+d.wx.t+' · '+d.wx.r+' · '+d.wx.wear+'</div><p class="intro">'+d.intro+'</p>';d.blocks.forEach(function(b,i){h+=blockHTML(b,(TRANSIT[d.n]||[])[i]||'','',true,(MERGULHE[d.n]||{})[b.t],(b.photo||(PHOTOS[d.n]||{})[b.t]));});h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><div class="hpt">'+d.phrase.pt+'</div></div></section>';});
+ DAYS.forEach(function(d){h+='<section class="pday"><img class="phero" src="'+d.hero+'" alt=""><div class="kick">Dia '+d.n+' · '+d.wd+'</div><h1 class="ptitle">'+d.title+'</h1><div class="pwx">'+d.wx.t+' · '+d.wx.r+' · '+d.wx.wear+'</div><p class="intro">'+d.intro+'</p>';d.blocks.forEach(function(b,i){h+=blockHTML(b,(TRANSIT[d.n]||[])[i]||'','',true,(MERGULHE[d.n]||{})[b.t],(b.photo||(PHOTOS[d.n]||{})[b.t]));});h+=extrasHTML(d.n);h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><div class="hpt">'+d.phrase.pt+'</div></div></section>';});
  h+='<section class="pday"><h1 class="ptitle">Frasário</h1><div class="ess">'+printFrasario()+'</div></section>';
  h+='<section class="pday"><h1 class="ptitle">Essencial</h1><div class="ess">'+ESSHTML.reservas+ESSHTML.metro+ESSHTML.mala+ESSHTML.seguranca+ESSHTML.apps+'</div></section>';
  h+='</div>';el('app').innerHTML=h;window.scrollTo(0,0);
