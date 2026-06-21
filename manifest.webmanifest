@@ -1,0 +1,14 @@
+{
+  "name": "Paris · Paulo & Thaise",
+  "short_name": "Paris",
+  "description": "Guia de bolso da viagem a Paris — dia a dia, mapas, história e frasário falante.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#efeae1",
+  "theme_color": "#16140f",
+  "icons": [
+    { "src": "img/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

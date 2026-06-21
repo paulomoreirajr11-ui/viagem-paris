@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#16140f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="img/icon.svg">
+<link rel="apple-touch-icon" href="img/icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Paris">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Paris · Paulo & Thaise</title>
+<style>
+  :root{--bg:#efeae1;--ink:#1a1813;--muted:#6e6a5f;--accent:#a8432c;--gold:#9c7b3a;--line:rgba(26,24,19,.14);--card:#fbf9f4}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+  .bar{position:sticky;top:0;z-index:30;background:rgba(239,234,225,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:11px 18px}
+  .bar button.back{background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;padding:0;display:none}
+  .bar .bt{flex:1;font-family:Georgia,serif;font-size:15px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .off{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .col{max-width:620px;margin:0 auto;padding:0 20px}
+  .kick{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .cover{position:relative;height:60vh;min-height:400px;overflow:hidden}
+  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cover .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,6,.12) 0%,rgba(10,8,6,.03) 34%,rgba(10,8,6,.82) 100%)}
+  .cover .txt{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 26px;color:#fff;max-width:620px;margin:0 auto}
+  .cover .kick{color:#f0c9bd}
+  .cover h1{font-family:Georgia,serif;font-weight:500;font-size:40px;line-height:1.03;letter-spacing:-.015em;margin:10px 0 11px;color:#fff;text-shadow:0 1px 22px rgba(0,0,0,.4)}
+  .cover .wx{font-size:13px;color:#efe7da;line-height:1.5}
+  .home-h{font-family:Georgia,serif;font-size:19px;font-weight:500;margin:26px 4px 12px}
+  .today{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--ink);color:#f4efe4;border:none;border-radius:3px;padding:13px 16px;margin:14px 0;cursor:pointer;font-size:14px}
+  .urgent{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:#fbeede;border:1px solid #ecd3a0;border-radius:3px;padding:12px 15px;margin:9px 0;cursor:pointer;font-size:14px;color:#7a4a0a;font-weight:600}
+  .dcard{display:flex;align-items:stretch;gap:0;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:3px;margin:9px 0;cursor:pointer;overflow:hidden}
+  .dcard .thumb{width:84px;flex:none;background-size:cover;background-position:center}
+  .dcard .di{flex:1;padding:12px 14px;min-width:0}
+  .dcard .dn{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .dcard .dt{font-family:Georgia,serif;font-size:18px;line-height:1.2;margin-top:3px}
+  .dcard .dw{font-size:12px;color:var(--muted);margin-top:4px}
+  .egrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 40px}
+  .ebtn{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:13px 13px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--ink);text-align:left}
+  .ebtn small{display:block;font-weight:400;color:var(--muted);font-size:11.5px;margin-top:2px}
+  .intro{font-size:16px;color:#46423a;font-style:italic;font-family:Georgia,serif;padding:24px 0 4px}
+  .daybtns{display:flex;gap:8px;margin:8px 0 6px}
+  .daybtns button{flex:1;background:var(--card);border:1px solid var(--line);border-radius:3px;padding:11px;font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;letter-spacing:.04em}
+  .stop{padding:28px 0;border-bottom:1px solid var(--line)}
+  .stop .num{font-family:Georgia,serif;font-size:13px;color:var(--accent)}
+  .stop h2{font-family:Georgia,serif;font-weight:500;font-size:29px;line-height:1.1;margin:6px 0 7px;letter-spacing:-.01em}
+  .stop .dek{font-family:Georgia,serif;font-style:italic;font-size:16.5px;color:var(--muted);margin-bottom:13px}
+  .stop p{font-size:15.5px;line-height:1.78;color:#34312a;margin:12px 0}
+  .stop p em{font-style:italic}
+  .stop figure{margin:4px -20px 16px;overflow:hidden}
+  .stop figure img{width:100%;display:block;height:244px;object-fit:cover}
+  .breathe{background:var(--card);border:1px solid var(--line);padding:14px 16px;margin:16px 0}
+  .breathe .bl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+  .breathe p{margin:0;font-size:14px;font-style:italic;color:#4a4639;line-height:1.7}
+  .photoq{border-left:2px solid var(--accent);padding:1px 0 1px 15px;margin:16px 0;font-size:13.5px;line-height:1.6;color:#34312a}
+  .photoq .pl{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px}
+  .merch{margin:14px 0}
+  .merch .ml{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:7px}
+  .merch .mi{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:5px 0;border-bottom:1px dotted var(--line)}
+  .merch .mi b{font-weight:600}
+  .facts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;margin:16px 0 12px}
+  .facts b{color:var(--ink);font-weight:600}
+  .acts{display:flex;gap:8px;flex-wrap:wrap}
+  a.map,button.show{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);color:var(--ink);background:none;text-decoration:none;padding:10px 16px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+  .endphrase{background:var(--ink);color:#f4efe4;padding:17px;margin:22px 0}
+  .endphrase .hl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#e0a892;font-weight:700}
+  .endphrase .hfr{font-family:Georgia,serif;font-size:19px;margin:8px 0 3px}
+  .endphrase .hpt{font-size:12.5px;color:#cfc8b8;margin-top:6px}
+  .ess{font-size:14.5px;color:#34312a;padding-bottom:40px}
+  .ess h2{font-family:Georgia,serif;font-weight:500;font-size:27px;margin:24px 0 6px}
+  .ess p{margin:9px 0;line-height:1.7}
+  .ess .box{background:var(--card);border:1px solid var(--line);padding:13px 15px;margin:11px 0}
+  .ess ul{list-style:none;margin:8px 0}
+  .ess li{margin:9px 0;padding-left:18px;position:relative;line-height:1.55}
+  .ess li::before{content:"—";position:absolute;left:0;color:var(--accent)}
+  .ess a{color:var(--accent);font-weight:600}
+  .pcat{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .prow{display:flex;align-items:center;gap:13px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .pmain{flex:1;min-width:0}.pfr{font-family:Georgia,serif;font-size:17px;line-height:1.25}.ppr{font-size:12px;color:var(--accent);margin-top:2px}.ppt{font-size:13px;color:var(--muted);margin-top:2px}
+  .play{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--ink);background:var(--bg);font-size:17px;cursor:pointer;transition:.15s}
+  .play.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .hero-phrase{background:var(--ink);color:#f4efe4;padding:18px;margin:4px 0 8px}
+  .hero-phrase .hl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#e0a892;font-weight:700}
+  .hero-phrase .hfr{font-family:Georgia,serif;font-size:20px;margin:8px 0 3px}.hero-phrase .hpr{font-size:12px;color:#c9c2b2}.hero-phrase .hpt{font-size:13px;color:#cfc8b8;margin-top:12px}
+  #show{display:none;position:fixed;inset:0;z-index:50;background:#16140f;color:#fff;padding:30px;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  #show.on{display:flex}
+  #show .lab{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#e0a892;margin-bottom:20px}
+  #show .big{font-family:Georgia,serif;font-size:30px;line-height:1.35}
+  #show button{margin-top:40px;background:none;border:1px solid #fff;color:#fff;padding:12px 26px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;border-radius:40px;cursor:pointer}
+  .pday{margin-bottom:34px}
+  .phero{display:block;width:100%;height:230px;object-fit:cover;border-radius:3px;margin-bottom:10px}
+  .ptitle{font-family:Georgia,serif;font-weight:500;font-size:30px;letter-spacing:-.01em;margin:6px 0 4px}
+  .pwx{font-size:13px;color:var(--muted);margin-bottom:2px}
+  .printbtn{display:block;width:100%;background:var(--accent);color:#fff;border:none;border-radius:3px;padding:13px;font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer;margin:12px 0}
+  @media print{
+   .bar,.daybtns,.acts,.play,.today,.urgent,.printbtn,#show{display:none!important}
+   body{background:#fff}.col{max-width:100%}
+   .stop,.endphrase,figure{page-break-inside:avoid}
+   .pday{page-break-before:always}.pday:first-child{page-break-before:auto}
+   .stop figure img,.phero{max-height:240px}
+   a{color:#1a1813!important;text-decoration:none}
+  }
+  .howto{margin:14px 0;border-top:1px solid var(--line);padding-top:9px}
+  .howto>summary{cursor:pointer;list-style:none;color:#185a8a;font-size:13px;font-weight:600}
+  .howto>summary::-webkit-details-marker{display:none}
+  .howto .htext{font-size:13.5px;color:#34312a;line-height:1.65;margin-top:7px}
+  #gohome{position:fixed;right:14px;bottom:16px;z-index:40;background:var(--ink);color:#fff;text-decoration:none;padding:11px 16px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.28)}
+  @media print{#gohome{display:none}}
+</style>
+</head>
+<body>
+<div class="bar"><button class="back" id="back">← início</button><span class="bt" id="bt">Paris</span><span class="off">offline</span></div>
+<a id="gohome" href="https://www.google.com/maps/dir/?api=1&destination=La%20Planque%20Hotel%2C%203%20Rue%20Arthur%20Groussier%2C%2075010%20Paris" target="_blank" rel="noopener" aria-label="Rota de volta ao hotel">🏠 hotel</a>
+<div id="app"></div>
+<div id="show"><div class="lab" id="showlab">Mostre esta tela</div><div class="big" id="showbig"></div><button onclick="document.getElementById('show').classList.remove('on')">fechar</button></div>
+
+<script>
+var DAYS=[
+{n:1,wd:"Sábado · 27 jun",hero:"img/paris.jpg",tag:"Chegada",title:"Bem-vindos a Paris",
+ wx:{t:"32° / 20°",r:"20% chuva",wear:"Calor — roupa leve e tênis; 1 casaco fino pra noite."},
+ intro:"Hoje é leve de propósito: chegar, largar as malas, sentir o bairro e dormir cedo. Mas o sol só se põe às 22h — a tarde rende.",
+ blocks:[
+  {k:"09:55",t:"Pouso em Orly",b:"Vocês chegam de Madri, já dentro da Europa — em Orly NÃO tem fila de passaporte. Peguem as 2 malas e sigam pra saída."},
+  {k:"~40 min",t:"Orly → hotel",b:"Com malas e cansaço, peguem o táxi oficial na fila (placa Taxis). Tarifa FIXA €44 até essa zona. Mostrem o endereço ao motorista.",addr:"La Planque Hotel, 3 Rue Arthur Groussier, 75010 Paris",maps:"La Planque Hotel 3 Rue Arthur Groussier 75010 Paris"},
+  {k:"a partir das 15h",t:"Check-in · La Planque",b:"Se o quarto não estiver pronto, deixem as malas e vão almoçar. Café da manhã incluído. M° Goncourt (linha 11), 3 min a pé.",addr:"3 Rue Arthur Groussier, 75010 Paris",maps:"La Planque Hotel 3 Rue Arthur Groussier 75010 Paris",
+   hist:"Você está num pedaço de Paris que Napoleão mandou cavar: o Canal Saint-Martin foi aberto a partir de 1802 pra trazer água limpa e escoar mercadorias. Suas eclusas e passarelas de ferro arqueadas viraram cartão-postal — e cenário do filme Amélie Poulain. Hoje o 10e é descolado, de parisienses de verdade.",
+   foto:"Pare numa das passarelas giratórias de ferro: quando uma barcaça passa pela eclusa, a ponte ainda gira pra liberar o caminho — engenharia do século XIX viva até hoje."},
+  {k:"tarde",t:"Primeira tarde a dois",b:"Caminhada leve pelo Canal (Quai de Valmy), um café na beira, e se o corpo aguentar, um pôr do sol na Île Saint-Louis com sorvete Berthillon. Sem forçar.",maps:"Quai de Valmy Canal Saint-Martin 75010 Paris"},
+  {k:"noite",t:"Jantar simples, dormir cedo",b:"Não force hoje. Amanhã o corpo já acorda no fuso de Paris."}
+ ],phrase:{fr:"Bonjour ! Une table pour deux, s'il vous plaît.",pt:"Olá! Uma mesa para dois, por favor."}},
+
+{n:2,wd:"Domingo · 28 jun",hero:"img/place-des-vosges.png",tag:"Livre a dois + garimpo",title:"O Marais, devagar",
+ wx:{t:"33° / 21°",r:"41% chuva",wear:"Muito quente: roupa leve. À noite, no rio, leve casaco fino e guarda-chuva."},
+ intro:"Domingo é pra desacelerar. De manhã, a praça mais antiga de Paris; à tarde, garimpo nos brechós do Marais (abrem no domingo); à noite, o Sena.",
+ blocks:[
+  {k:"manhã",t:"Place des Vosges",dek:"Duzentos anos antes de Haussmann, alguém já desenhava Paris como um conjunto.",
+   b:"Sentem no jardim antes do calor, deem a volta pelas arcadas na sombra e entrem de graça na Casa de Victor Hugo (esquina sudeste) — ele morou no nº 6 e escreveu parte de Os Miseráveis aqui. Encomendada por Henrique IV e inaugurada em 1612, é a primeira praça planejada da cidade: 36 pavilhões idênticos de tijolo e pedra.",
+   hist:"Por séculos a aristocracia duelava de espada no centro deste jardim, mesmo o rei tendo proibido — o endereço mais elegante de Paris também foi o mais sangrento. Hoje o mesmo gramado é onde os parisienses tomam sol no domingo.",
+   foto:"Os dois pavilhões do meio — do Rei (sul) e da Rainha (norte) — são mais altos e quebram a simetria de propósito. E procure o ponto onde as arcadas fogem em perspectiva.",
+   facts:["praça livre","Casa de V. Hugo grátis","M° Saint-Paul"],addr:"Place des Vosges, 75004 Paris",maps:"Place des Vosges 75004 Paris"},
+  {k:"tarde · garimpo",t:"Brechós chic do Marais",dek:"Melhor custo-benefício, onde o parisiense garimpa — e seguro de dia.",
+   b:"Tudo num raio de 10 min a pé. Comecem pela rue de la Verrerie e fechem na rue des Rosiers. Levem euros em dinheiro (várias só aceitam cash) e bolsa fechada à frente.",
+   merch:{l:"As 3 verificadas (abrem domingo)",items:[["Kilo Shop · 69 R. de la Verrerie","por quilo, camiseta ~€10-15","Kilo Shop 69 Rue de la Verrerie 75004 Paris"],["Free'p'star · 8 R. Ste-Croix Bretonnerie","pechincha a partir de €3-10","Free P Star 8 Rue Sainte-Croix de la Bretonnerie 75004 Paris"],["Vintage Désir · 32 R. des Rosiers","baratíssimo, só dinheiro","Vintage Desir 32 Rue des Rosiers 75004 Paris"]]},
+   foto:"💎 Pra outro dia: <b>Thanx God I'm a VIP</b> (12 Rue de Lancry, do lado do hotel) — luxo de 2ª mão a fração do preço, seg–sáb 14h–20h. <a href='https://www.google.com/maps/search/?api=1&query=Thanx%20God%20Im%20a%20VIP%2012%20Rue%20de%20Lancry%2075010%20Paris' target='_blank' rel='noopener' style='color:#a8432c;font-weight:600;white-space:nowrap'>📍 abrir no mapa</a>",
+   maps:"Kilo Shop 69 Rue de la Verrerie Paris"},
+  {k:"noite",t:"Jantar de barco no Sena",dek:"Ver Paris da água é entender que tudo nasceu deste eixo líquido.",photo:"img/pont-alexandre.jpg",
+   b:"Ponto de embarque conforme o grupo. Levem casaco: parado, o barco venta de verdade. A cidade nasceu como Lutécia, povoado romano na Île de la Cité. A Pont Alexandre III, dourada, foi feita pra Expo de 1900; a Pont Neuf, apesar do nome novo, é a mais antiga.",
+   hist:"A Pont Alexandre III é quase plana de propósito, pra não tapar a vista dos Invalides de um lado e dos Champs-Élysées do outro — engenharia a serviço da paisagem. As ninfas e cavalos alados dourados seguram a ponte como uma joia.",
+   foto:"A cada hora cheia, depois de escurecer, a Torre Eiffel cintila por 5 minutos. Vista do rio é a foto da viagem."},
+ ],phrase:{fr:"Bonsoir ! C'était une belle journée.",pt:"Boa noite! Foi um lindo dia."}},
+
+{n:3,wd:"Segunda · 29 jun",hero:"img/arc.jpg",tag:"Curso da Thaise · seu 1º dia",title:"O eixo de Paris, a pé",
+ wx:{t:"24° / 20°",r:"53% chuva",wear:"Esfria e chove — guarda-chuva e casaco. Smart-casual (zona de luxo)."},
+ intro:"Na segunda muitos museus fecham — o dia perfeito pra fazer o Axe Historique a pé, do Arco até o Louvre. A viagem inteira de Paris numa linha reta.",
+ blocks:[
+  {k:"~9h",t:"Levo a Thaise",b:"Deixe-a na escola e suba já ao Arco (5 min). Reencontro às 18h — manhã e tarde são suas.",addr:"58 Av. de la Grande Armée, 75017 Paris",maps:"58 Avenue de la Grande Armée 75017 Paris"},
+  {k:"€22",t:"Arco do Triunfo",dek:"O terraço de onde os 8 km de Paris se revelam de uma vez.",
+   b:"€22 (€16 quarta), aberto até 23h no verão — RESERVE online. Atravesse pela passagem subterrânea, nunca pela rotatória.",
+   hist:"Daqui você vê o Axe Historique inteiro: o olhar desce a Champs-Élysées, encontra o obelisco da Concorde, atravessa o Louvre e morre na Grande Arche de La Défense — um arco moderno torto uns 6°, porque não dava pra entortar o metrô embaixo. Napoleão o encomendou em 1806, morreu sem vê-lo pronto e só passou por baixo já morto, em 1840.",
+   foto:"Ache 'A Marselhesa' de Rude (lado Champs). 660 generais nas paredes; os sublinhados morreram em combate. Suba às 22h: a Eiffel cintila com o eixo aceso aos seus pés.",
+   facts:["€22","até 23h","M° Charles de Gaulle–Étoile"],maps:"Arc de Triomphe Paris"},
+  {k:"a pé",t:"Champs-Élysées + Grand Palais",photo:"img/grand-palais.jpg",
+   b:"Desça a avenida. Grand Palais e Petit Palais fecham segunda, mas as fachadas valem — e logo adiante, a Pont Alexandre III.",
+   hist:"O Grand Palais é uma catedral de vidro e aço de 1900, a maior nave envidraçada da Europa, reaberta em 2024. Pedra acadêmica por fora, estrutura industrial ousada por dentro.",maps:"Grand Palais Paris"},
+  {k:"a pé",t:"Concorde → Pirâmide do Louvre",photo:"img/louvre.jpg",
+   b:"Pela Concorde (o obelisco de Luxor tem 3.300 anos; aqui caiu a cabeça de Luís XVI) e o Jardim das Tuileries até o Louvre. O museu ABRE segunda (fecha terça).",
+   hist:"A pirâmide de I.M. Pei (1989) foi odiada quando inaugurada, chamada de profanação. Hoje é símbolo de Paris e a prova de que o contraste franco envelhece melhor que a imitação tímida. É o ponto onde nasce o eixo que você viu do Arco.",
+   foto:"No Carrousel ao lado: a 'pirâmide invertida', a ponta de vidro descendo até quase tocar uma pirâmide de pedra no chão.",
+   facts:["pátio livre","Louvre: reserve","fecha terça"],maps:"Pyramide du Louvre Paris"},
+  {k:"18h",t:"Reencontro",b:"Encontre a Thaise no 23 Av. des Champs-Élysées e voltem juntos.",addr:"23 Av. des Champs-Élysées, 75008 Paris",maps:"23 Avenue des Champs-Elysees Paris"}
+ ],phrase:{fr:"Un café, s'il vous plaît.",pt:"Um café, por favor. (vem expresso e curto.)"}},
+
+{n:4,wd:"Terça · 30 jun",hero:"img/palais-garnier.jpg",tag:"Curso (Vendôme) · tesouros escondidos",title:"As galerias cobertas",
+ wx:{t:"26° / 16°",r:"36% chuva",wear:"Ameno. Smart-casual elegante; sapato confortável."},
+ intro:"Terça o Louvre e várias coleções fecham — mas as galerias cobertas e a Salle Ovale abrem. Um dia de tesouros a poucos passos, quase sem turistas.",
+ blocks:[
+  {k:"manhã",t:"Levo a Thaise",b:"Deixe-a na masterclass da Boucheron, na Place Vendôme. Reencontro às 17h no Printemps.",addr:"26 Place Vendôme, 75001 Paris",maps:"26 Place Vendome 75001 Paris"},
+  {k:"a pé",t:"Place Vendôme",photo:"img/place-vendome.jpg",
+   b:"Gire devagar no meio da praça: cada vitrine é uma das maiores joalherias do mundo, com altura e ritmo idênticos em todos os lados.",
+   hist:"Praça octogonal de Hardouin-Mansart, o arquiteto de Versalhes, templo das joalherias e do Ritz. A coluna no centro foi fundida com o bronze dos canhões que Napoleão tomou em Austerlitz.",
+   foto:"A coluna imita a de Trajano de Roma, com a batalha em espiral subindo até Napoleão no topo.",maps:"Place Vendome 75001 Paris"},
+  {k:"livre",t:"Galerie Vivienne + Salle Ovale",dek:"Os antepassados do shopping, de 1826 — e uma das salas de leitura mais bonitas do mundo, de graça.",
+   b:"A Galerie Vivienne (1826) é uma rua privada com teto de vidro e ferro, iluminada a gás. A 2 min, empurre a porta da Salle Ovale (Richelieu): entre sem reserva, sente e olhe pra cima.",
+   hist:"As galerias cobertas eram ruas particulares onde a alta sociedade do século XIX passeava protegida da chuva — inventadas quase um século antes dos shoppings. A Salle Ovale, restaurada em 2022, é uma elipse coroada por domos de vidro; abre na terça, justo quando o resto fecha.",
+   foto:"Na Vivienne, o piso de mosaicos de Facchina; o nº 13 foi onde morou Vidocq, o 'rei dos ladrões' que virou o 1º detetive de Paris.",
+   facts:["acesso livre","Salle Ovale grátis","M° Bourse"],maps:"Galerie Vivienne Paris"},
+  {k:"~17h",t:"Reencontro no Printemps",b:"Subam ao terraço do Printemps (gratuito) pra ver Paris do alto no fim da tarde.",maps:"Printemps Haussmann Paris"}
+ ],phrase:{fr:"C'est combien ?",pt:"Quanto é? (ou use a câmera do tradutor.)"}},
+
+{n:5,wd:"Quarta · 01 jul",hero:"img/samaritaine.jpg",tag:"Curso (Saint-Honoré) · velho e novo",title:"Concreto, vidro e pedra",
+ wx:{t:"27° / 16°",r:"22% chuva",wear:"Agradável e seco. Casual estiloso + tênis bom de caminhar."},
+ intro:"Quarta abre quase tudo: o coração antigo de Paris onde o clássico conversa, sem medo, com o contemporâneo. (E hoje dá pra emendar o Louvre à noite.)",
+ blocks:[
+  {k:"9h30",t:"Levo a Thaise",b:"Deixe-a na Rue Saint-Honoré. Reencontro 17h na visita dela à Samaritaine.",addr:"316 Rue Saint-Honoré, 75001 Paris",maps:"316 Rue Saint-Honore 75001 Paris"},
+  {k:"€15",t:"Bourse de Commerce — Tadao Ando",dek:"Uma bolsa de grãos do séc. XVIII com um cilindro de concreto encaixado dentro.",
+   b:"Abre 11h, fecha 19h (fechada terça), €15. Por dentro está a aula de arquitetura da viagem.",
+   hist:"A antiga bolsa de grãos circular virou museu de arte de François Pinault. O japonês Tadao Ando encaixou um imenso cilindro de concreto liso dentro da rotunda histórica, sob a cúpula de vidro — o diálogo perfeito entre o velho e o novo, sem que um toque no outro.",
+   foto:"Suba e ande sobre o anel de concreto de Ando: dali você fica na altura exata pra olhar o afresco do século XIX que corre na cúpula, bem acima.",
+   facts:["€15","fecha terça","M° Louvre-Rivoli"],maps:"Bourse de Commerce Pinault Collection Paris"},
+  {k:"grátis",t:"Saint-Eustache + La Samaritaine",
+   b:"A igreja Saint-Eustache (1532-1632) mistura gótico e renascença — Molière foi batizado ali. A 5 min, entre na Samaritaine só pra ver o átrio e o terraço (livres).",
+   hist:"A Samaritaine reabriu em 2021 guardando duas joias Art Nouveau — a escadaria de ferro e o vitral do pavão — e ganhou uma fachada de vidro ondulada dos japoneses do SANAA, virada pro Sena.",
+   foto:"Olhe pra cima na Samaritaine: o lustre de ferro e o friso do pavão estão lá no alto, originais. O terraço tem vista do Pont-Neuf.",
+   facts:["grátis","M° Pont-Neuf"],maps:"Samaritaine Paris"},
+  {k:"almoço",t:"Rue Montorgueil",dek:"A rua-mercado onde o parisiense come — não o turista.",
+   b:"Rua de pedestres com bancas, padarias e mesinhas. Há comércio de comida aqui desde antes do séc. XIII; Monet a pintou cheia de bandeiras.",
+   merch:{l:"O que provar / comprar",items:[["Stohrer (nº 51)","a + antiga confeitaria de Paris (1730), o 'baba au rhum'"],["Queijos & charcutaria","ótimos pra um piquenique"],["Eric Kayser","croissant e pain au chocolat"]]},
+   maps:"Rue Montorgueil Paris"},
+  {k:"17h → noite",t:"Reencontro + Louvre à noite",dek:"O melhor jeito de ver o Louvre: a nocturne de quarta, quase vazia.",
+   b:"Encontre a Thaise na Samaritaine (a passos do Louvre) e entrem juntos: na QUARTA o Louvre abre até 21h45, bem menos cheio. RESERVE o horário (~€22, fecha terça).",
+   foto:"De noite, a pirâmide iluminada vira uma joia de vidro pousada sobre a pedra de quatro séculos.",
+   facts:["~€22","reserve","qua até 21h45"],maps:"Musée du Louvre Paris"}
+ ],phrase:{fr:"Une carafe d'eau, s'il vous plaît.",pt:"Uma jarra de água (de graça), por favor."}},
+
+{n:6,wd:"Quinta · 02 jul",hero:"img/eiffel.jpg",tag:"Curso (Champs) · o santuário do arquiteto",title:"Do gesso ao concreto",
+ wx:{t:"25° / 19°",r:"15% chuva",wear:"Bom pra andar; à noite vão juntos a um museu — leve algo arrumado + casaco fino."},
+ intro:"Hoje você chega à Cité de l'Architecture — talvez o lugar mais emocionante de Paris pra um arquiteto — e termina reencontrando a Thaise num museu de arte.",
+ blocks:[
+  {k:"manhã",t:"Levo a Thaise",b:"Deixe-a nos Champs (Tiffany 11h). Combine ponto e horário do reencontro antes — o celular some na multidão.",addr:"62 Av. des Champs-Élysées, 75008 Paris",maps:"62 Avenue des Champs-Elysees Paris"},
+  {k:"€13",t:"Cité de l'Architecture",dek:"Catedrais inteiras, em gesso e tamanho real, dentro de um museu.",
+   b:"No Palais de Chaillot (Trocadéro). Não precisa marcar horário: chegue, pague ~€13, entre. Reserve umas boas horas.",
+   hist:"É um museu DA arquitetura francesa: galerias inteiras de moldes em gesso, em tamanho real, de portais e tímpanos de catedrais — feitos pra preservar o que o tempo apagaria nas pedras originais. E há um apartamento da Unité d'Habitation de Le Corbusier, onde você entra de verdade.",
+   foto:"Você caminha 'dentro' de catedrais que estão a centenas de km umas das outras, lado a lado. Não perca a maquete da unidade Corbusier; suba pra ver a Eiffel emoldurada pela janela.",
+   facts:["~€13","fecha terça","M° Trocadéro"],maps:"Cite de l'architecture et du patrimoine Paris"},
+  {k:"a pé",t:"Trocadéro (a vista)",b:"Saindo da Cité, atravesse pro terraço do Chaillot (Expo de 1937): a Torre Eiffel inteira do outro lado do Sena. O cartão-postal definitivo.",
+   foto:"É daqui a foto clássica da Eiffel de frente. Vá antes do fim da tarde pra luz boa — e segure a bolsa no aperto.",maps:"Place du Trocadero Paris"},
+  {k:"19h",t:"Reencontro no Palais de Tokyo",b:"Vejam a exposição juntos — abre até tarde. Depois das vitrines e do gótico, fechar em arte contemporânea é o contraste perfeito.",
+   hist:"Também da Expo de 1937, hoje é o maior centro de arte contemporânea da Europa — deixado de propósito em concreto cru, inacabado. Livraria e café abertos à noite.",
+   addr:"13 Av. du Président Wilson, 75116 Paris",maps:"Palais de Tokyo Paris"}
+ ],phrase:{fr:"C'est magnifique !",pt:"É magnífico! (elogie — eles amam.)"}},
+
+{n:7,wd:"Sexta · 03 jul",hero:"img/fondation-lv.jpg",tag:"Thaise fora o dia todo · SEU dia livre",title:"De Corbusier a Gehry",
+ wx:{t:"23° / 17°",r:"15% chuva",wear:"Fresco e seco, dia perfeito de caminhar — camadas + tênis."},
+ intro:"A Thaise passa o dia no outlet, e você tem Paris só pra você. Reservei o melhor pra um arquiteto: uma casa-manifesto de Le Corbusier e o veleiro de vidro de Frank Gehry.",
+ blocks:[
+  {k:"€10",t:"Maison La Roche — Le Corbusier",dek:"O laboratório onde a arquitetura do século XX foi inventada.",
+   b:"Comece cedo: a casa é pequena e enche. Ter-sáb 10h-18h (sexta abre), ~€10.",
+   hist:"Uma das primeiras casas-manifesto de Le Corbusier (1923-25), onde ele aplicou pela 1ª vez os 'cinco pontos da arquitetura moderna'. Hoje é a sede da Fondation Le Corbusier.",
+   foto:"Procure ao vivo os cinco pontos: os pilotis erguendo a casa, a planta livre, a fachada livre, a janela em fita e o terraço-jardim. A rampa curva é pura promenade architecturale.",
+   facts:["~€10","ter-sáb","M° Jasmin"],maps:"Maison La Roche Fondation Le Corbusier Paris"},
+  {k:"€19-22",t:"Fondation Louis Vuitton — Gehry",dek:"Doze velas de vidro curvo sobre um iceberg branco.",
+   b:"No Bois de Boulogne. O único bloco do dia que pede RESERVA de horário. Abre 11h-20h (sex até 21h).",
+   hist:"O 'veleiro de vidro' de Frank Gehry (2014): cada painel é único, e o conjunto só foi possível por uma façanha de engenharia e modelagem digital de ponta.",
+   foto:"Suba aos terraços e ande entre as velas de vidro — a melhor parte. De certos ângulos, com a água em volta, o prédio parece flutuar.",
+   facts:["€19-22","reserve","fecha terça"],maps:"Fondation Louis Vuitton Paris"}
+ ],phrase:{fr:"Où sont les toilettes ?",pt:"Onde fica o banheiro?"}},
+
+{n:8,wd:"Sábado · 05 jul",hero:"img/notre-dame.jpg",tag:"Livres a dois · o berço de Paris",title:"A Île de la Cité",
+ wx:{t:"26° / 16°",r:"16% chuva",wear:"Sol e ameno — casual. Em igreja, ombros cobertos."},
+ intro:"Um dia só de vocês dois pela ilha onde Paris começou há mais de dois mil anos. Tudo cabe a pé, devagar.",
+ blocks:[
+  {k:"manhã · grátis",t:"Notre-Dame de Paris",dek:"A catedral mais luminosa que qualquer parisiense vivo já viu.",
+   b:"Reaberta em dez/2024, grátis, todo dia. Na alta temporada, reserve horário online (a fila também anda). Entre devagar e deixe os olhos subirem.",
+   hist:"A catedral gótica começou em 1163 e quase se perdeu no incêndio de 2019. Foi reerguida em cinco anos e reabriu em dezembro de 2024, com a pedra clara limpa. A flecha caída foi reconstruída idêntica à de Viollet-le-Duc.",
+   foto:"Repare como a pedra ficou quase branca depois da limpeza. Lá no alto, entre as gárgulas, a Stryge — a quimera apoiada no queixo que parece pensar sobre a cidade.",
+   facts:["grátis","todo dia","M° Cité"],maps:"Notre-Dame de Paris"},
+  {k:"meio-dia · €20",t:"Sainte-Chapelle",dek:"As paredes desaparecem atrás de 15 metros de vitrais.",photo:"img/sainte-chapelle.jpg",
+   b:"A passos da catedral. Se reservaram: horário obrigatório, €20 (ou €28 com a Conciergerie). Suba a escadinha de caracol e, quando o teto se abrir, prepare-se.",
+   hist:"A 'caixa de joias' gótica de Luís IX, concluída em 1248 em tempo recorde pra guardar relíquias da Paixão. As paredes quase somem atrás dos vitrais, sustentados por hastes finíssimas de pedra — gótico levado ao limite do impossível.",
+   foto:"Vá num momento de sol: a luz atravessa mais de mil cenas bíblicas e pinta o chão. Suba à capela alta e gire uma vez em torno de si mesmo. É de chorar.",
+   facts:["€20","reserve","M° Cité"],maps:"Sainte-Chapelle Paris"},
+  {k:"tarde · grátis",t:"Pavillon de l'Arsenal",dek:"De arquiteto pra arquiteto: onde Paris explica como foi pensada.",
+   b:"Na margem direita, a poucos minutos. Entrada totalmente gratuita, ter-dom 11h-19h.",
+   hist:"O centro de urbanismo e arquitetura da cidade de Paris — conta como a metrópole foi planejada ao longo dos séculos e como será no futuro.",
+   foto:"No piso, uma maquete GIGANTE de Paris com projeção interativa. Ache o seu hotel, o Canal, a Île de la Cité de hoje de manhã.",
+   facts:["grátis","fecha segunda","M° Sully-Morland"],maps:"Pavillon de l'Arsenal Paris"}
+ ],phrase:{fr:"Deux billets, s'il vous plaît.",pt:"Dois ingressos, por favor."}},
+
+{n:9,wd:"Domingo · 06 jul",hero:"img/sacre-coeur.jpg",tag:"Livres a dois · arte e altura",title:"Da estação à colina",
+ wx:{t:"22° / 15°",r:"—",wear:"Mais fresco — leve uma 2ª camada. Dia de museu."},
+ intro:"O último dia inteiro. Comecem entre os impressionistas, numa estação de trem virada museu, e terminem na colina mais romântica de Paris.",
+ blocks:[
+  {k:"manhã · €17,50",t:"Musée d'Orsay",dek:"O maior acervo impressionista do mundo, dentro de uma gare de 1900.",
+   b:"Abre domingo (fecha segunda). €17,50 — reservem horário, as filas são grandes.",
+   hist:"A antiga Gare d'Orsay, estação Beaux-Arts de 1900, foi ameaçada de demolição nos anos 1970 e salva no último instante. O grande vão de ferro e vidro que cobria os trilhos virou a nave de luz que cobre as esculturas.",
+   foto:"Subam atrás do enorme relógio de vidro do antigo saguão e olhem Paris através dos ponteiros, com Montmartre no horizonte. A foto mais querida do museu.",
+   facts:["€17,50","reserve","M° Solférino"],maps:"Musee d'Orsay Paris"},
+  {k:"tarde · grátis",t:"Sacré-Cœur + Montmartre",dek:"A basílica branca no ponto mais alto de Paris.",
+   b:"A basílica é grátis (só a cúpula é paga). O programa é a colina inteira: ruelas, ateliês, músicos, a vista. Sentem nos degraus e deixem o sol descer.",
+   hist:"Erguida após a derrota na guerra de 1870, em estilo romano-bizantino. Abaixo, Montmartre, a colina dos pintores onde Picasso e Van Gogh moraram — por séculos uma aldeia de vinhas e moinhos.",
+   foto:"A pedra solta calcita quando chove — por isso fica cada vez MAIS branca com o tempo. Dos degraus, a vista varre Paris inteira.",
+   facts:["grátis","M° Anvers/Abbesses"],maps:"Basilique du Sacre-Coeur Paris"}
+ ],phrase:{fr:"L'addition, s'il vous plaît.",pt:"A conta, por favor. (precisa pedir; não vem sozinha.)"}},
+
+{n:10,wd:"Terça · 07 jul",hero:"img/paris.jpg",tag:"Dia de voltar · voo 19:25",title:"Adeus a Paris, sem pressa",
+ wx:{t:"24° / 15°",r:"—",wear:"Roupa confortável em camadas + casaco pro voo da noite."},
+ intro:"A manhã é leve: o último café, a última volta no bairro, as compras que faltaram. Na terça o Louvre fecha — hoje é só despedida.",
+ blocks:[
+  {k:"manhã",t:"Café + última volta no Canal",b:"Aproveitem o café incluso com calma e a última caminhada pelo Canal que já virou de vocês. Fotografem a esquina preferida mais uma vez."},
+  {k:"manhã",t:"Souvenirs — La Grande Épicerie",dek:"Gosto de Paris pra levar pra casa.",
+   b:"Templo gastronômico (Rive Gauche). Tudo cabe na mala e vira presente.",
+   merch:{l:"O que levar",items:[["Chocolates finos & biscuits","€10-25"],["Sal de Guérande","colhido à mão, ~€6"],["Mostardas & geleias","presentes perfeitos"]]},
+   addr:"38 Rue de Sèvres, 75007 Paris",maps:"La Grande Epicerie de Paris Rive Gauche"},
+  {k:"~até 12h",t:"Check-out",b:"Façam o check-out até o meio-dia. Deixem as malas na recepção se quiserem esticar a manhã."},
+  {k:"~16h",t:"Hotel → Orly",b:"Saiam com folga. Táxi tarifa fixa ~€44, ou Metrô Linha 14 direto. Cheguem ~2h30 antes do voo das 19:25.",
+   foto:"A Linha 14 é automática, sem motorista. Sente no primeiro vagão e olhe pelo vidro dianteiro — dá pra 'dirigir' o metrô com os olhos. Um último presente de engenharia.",maps:"Aeroport de Paris-Orly"},
+  {k:"19:25",t:"Voo de volta",b:"Embarque às 19:25, conexão em Madri a caminho de São Paulo. Olhem pela janela quando a cidade ficar pequena. Até a próxima, Paris."}
+ ],phrase:{fr:"Merci pour tout. Au revoir !",pt:"Obrigado por tudo. Até logo!"}}
+];
+
+var ESS=[
+ {key:"frasario",e:"🗣️",t:"Frasário falante",sub:"toque e o celular fala"},
+ {key:"reservas",e:"⏰",t:"Reservar antes",sub:"links · alguns esgotam"},
+ {key:"metro",e:"🚇",t:"Metrô & dinheiro",sub:"Navigo · táxi · orçamento"},
+ {key:"mala",e:"🧳",t:"Mala essencial",sub:"o que levar"},
+ {key:"seguranca",e:"🛡️",t:"Segurança & emergência",sub:"112 · golpes"},
+ {key:"apps",e:"📱",t:"Apps no Brasil",sub:"deixe pronto antes"}
+];
+
+var PHRASES={
+ hero:{fr:"Bonjour ! Je ne parle pas français. Parlez-vous anglais ?",pr:"bon-JUR · je ne parl pa fran-SÉ · par-lê-VÚ an-GLÉ",pt:"“Olá! Não falo francês. Você fala inglês?” — comece sempre por esta, com um sorriso: derruba a fama de impaciência.",say:"Bonjour, je ne parle pas français, parlez-vous anglais ?"},
+ cats:[
+  {c:"No restaurante",rows:[["Une table pour deux, s'il vous plaît.","ün TÁBl pur DÊ","Uma mesa para dois."],["Le menu, s'il vous plaît.","le me-NÜ","O cardápio."],["Une carafe d'eau, s'il vous plaît.","ün ka-RÁF DÔ","Água da torneira, de graça."],["Je voudrais ça, s'il vous plaît.","je vu-DRÊ SÁ","Eu queria isto. (apontando)"],["L'addition, s'il vous plaît.","la-di-si-ON","A conta."]]},
+  {c:"Comprar / atrações",rows:[["Deux billets, s'il vous plaît.","DÊ bi-IÊ","Dois ingressos."],["C'est combien ?","sê kon-bi-ÃN","Quanto é?"],["Vous prenez la carte ?","vu pre-NÊ la KÁRT","Aceita cartão?"],["À quelle heure fermez-vous ?","a kel ER fer-mê-VÚ","Que horas fecham?"]]},
+  {c:"Brechó / provar roupa",rows:[["Je regarde, merci.","je re-GÁRD, mer-SI","Só estou olhando."],["Je peux essayer ?","je pe e-sê-IÊ","Posso provar?"],["Vous avez ma taille ?","vu-za-VÊ ma TÁI","Tem no meu tamanho?"]]},
+  {c:"Caminho / ajuda",rows:[["Où est le métro ?","u ê le me-TRÔ","Onde fica o metrô?"],["Où sont les toilettes ?","u son lê tua-LÉT","Onde é o banheiro?"],["Pouvez-vous m'aider ?","pu-vê-VÚ me-DÊ","Pode me ajudar?"]]},
+  {c:"No metrô",rows:[["Deux tickets, s'il vous plaît.","DÊ ti-KÊ, sil vu PLÉ","Dois bilhetes, por favor. (no guichê ou na máquina)"],["Un plan de métro, s'il vous plaît.","an PLAN de me-TRÔ, sil vu PLÉ","Um mapa do metrô, por favor."],["Pour aller à Goncourt, s'il vous plaît ?","pur a-LÊ a gon-KÚR, sil vu PLÉ","Para ir a Goncourt? (troque pelo nome da sua estação)"],["C'est la bonne direction ?","sê la bón di-rek-si-ÓN","É a direção certa?"],["Où dois-je changer ?","u du-á-je shan-JÊ","Onde eu troco de linha?"],["Excusez-moi, je descends.","eks-kü-zê-MUÁ, je de-SAN","Com licença, vou descer. (no vagão cheio)"]]},
+  {c:"O essencial",rows:[["Bonjour / Bonsoir","bon-JUR / bon-su-ÁR","Bom dia / Boa noite"],["Merci beaucoup","mer-SI bo-KÚ","Muito obrigado(a)"],["Pardon / Excusez-moi","par-DON / eks-kü-zê-MUÁ","Desculpe / Com licença"],["C'était délicieux !","se-TÉ de-li-si-Ô","Estava delicioso!"]]}
+ ]
+};
+
+var TRANSIT={
+1:["","Da fila oficial 'Taxis' (placa branca), táxi tarifa FIXA €44 até o hotel (~40 min, malas incluídas) — o mais fácil no 1º dia. Mais barato (~€13): Metrô L14 (dir. Saint-Denis Pleyel) até Châtelet → L11 (dir. Rosny-Bois-Perrier) até Goncourt. Nunca aceite corrida oferecida dentro do saguão.","","A pé: desça a Rue Arthur Groussier, vire à direita, ~8 min até o Quai de Valmy. Sem metrô.","Tudo a pé pelo bairro (5–12 min). À noite volte por ruas movimentadas; se tarde, táxi curto ~€10."],
+2:["Do hotel: a pé até République (5 min) → L8 (dir. Créteil) até Bastille (3 paradas) → 6 min a pé até a praça.","Tudo a pé pelo Marais: Place des Vosges → rue des Rosiers → rue de la Verrerie (10–15 min). Seguro de dia.","Da rue de la Verrerie: Hôtel de Ville → L1 (dir. La Défense) até Franklin D. Roosevelt → L9 (dir. Pont de Sèvres) até Alma-Marceau (~25 min); 4 min a pé até o cais. À NOITE, volte de táxi/Uber do cais ao hotel (~€20–25)."],
+3:["Do hotel: a pé até République → L11 (dir. Châtelet), 1 parada → Châtelet → L1 (dir. La Défense) até George V (~25 min); suba a Av. de la Grande Armée ~8 min até o nº 58.","Do nº 58, ~7 min a pé até o Arco. Atravesse pela PASSAGEM SUBTERRÂNEA (nunca a rotatória).","Tudo a pé: desça a Champs-Élysées (~20 min, ladeira leve), passando pelo Grand Palais. Seguro de dia.","A pé até a Concorde (~5 min) e pelas Tulherias até o Louvre (~15 min). Pra poupar as pernas: L1 (Concorde, dir. Vincennes) 1 parada até Palais Royal–Louvre.","Reencontro: do Louvre, L1 (dir. La Défense) até Franklin D. Roosevelt (3 min até o nº 23). VOLTA: L1 até Châtelet → L11 (dir. Rosny) até Goncourt. À noite, táxi ~€18."],
+4:["Do hotel: a pé até République → L8 (dir. Balard) até Opéra (6 paradas, ~12 min) → 4 min a pé até a Place Vendôme.","","Tudo a pé: da Place Vendôme pela Rue des Petits-Champs até a Galerie Vivienne (~8 min); a Salle Ovale fica colada (2 min).","Da Vivienne: Quatre-Septembre → L3 (dir. Pont de Levallois) até Havre-Caumartin (2 paradas); Printemps a 2 min. VOLTA: L9 (dir. Montreuil) até République. Com sacolas, táxi ~€15."],
+5:["Do hotel: a pé até Goncourt → L11 (dir. Châtelet) até Châtelet → L1 (dir. La Défense) até Tuileries (~20 min); 2 min a pé até o nº 316.","Perto: a pé (~8 min) pela Rue du Louvre/Coquillière até a Rue de Viarmes (o prédio redondo).","A pé, tudo coladinho (~5 min): Saint-Eustache ao lado; depois pela Rue du Pont Neuf até a Samaritaine.","A pé (~12 min) subindo pela Rue Montmartre. Calçadão seguro de dia.","Samaritaine → Louvre a 8 min a pé pela Rue de Rivoli. À NOITE, volte de táxi/Uber do Louvre (~€12–16)."],
+6:["Do hotel: a pé até Goncourt → L11 (dir. Châtelet) até Châtelet → L1 (dir. La Défense) até George V (~25 min); a estação fica ao lado do nº 62.","George V → L1 (dir. La Défense) 1 parada até Charles de Gaulle–Étoile → L6 (dir. Nation) até Trocadéro (~15 min). A Cité fica no Palais de Chaillot, na própria praça.","A pé: você já está no Trocadéro. Atravesse a esplanada — é o ponto da foto da Torre Eiffel (2 min).","A pé (~11 min) descendo a Av. du Président Wilson até o Palais de Tokyo. À noite, táxi/Uber (~€18–22)."],
+7:["Do hotel: a pé até Goncourt → L11 (dir. Châtelet) até République → L9 (dir. Pont de Sèvres) até Jasmin (direto); 10 min a pé até o nº 10 (~40 min).","Mais simples: L9 de Jasmin (dir. Montreuil) até Charles de Gaulle–Étoile e pegue o ÔNIBUS-SHUTTLE oficial da Fondation (€2 ida/volta, saída 44 Av. de Friedland). VOLTA à noite: táxi/Uber (~€22–28) — há pouco metrô no Bois de Boulogne."],
+8:["Do hotel: a pé até Goncourt → L11 (dir. Châtelet) até Hôtel de Ville (4 paradas, ~8 min); atravesse a ponte a pé até a ilha (5–7 min).","A pé, na mesma ilha: da Notre-Dame à Sainte-Chapelle ~6 min. Atenção a batedores na fila.","A pé (~10 min) pela Pont Marie; o Pavillon fica a 80 m de Sully-Morland. VOLTA: L7 (dir. La Courneuve) até Châtelet → L11 (dir. Mairie des Lilas) até Goncourt. Se tarde, táxi ~€12–15."],
+9:["Do hotel: a pé até République (7 min) → L8 (dir. Balard) até Concorde → L12 (dir. Mairie d'Issy) até Solférino (1 parada); 5 min a pé até o Orsay (~30 min).","ROTA SEGURA por ABBESSES (não desça em Barbès nem Anvers): Solférino → L12 (dir. Aubervilliers) até Abbesses (~20 min). Use o ELEVADOR (estação funda) e suba por ruas movimentadas. À NOITE, volte de táxi do Sacré-Cœur (~€20–25)."],
+10:["A pé, no bairro: o Canal começa a ~5 min da porta do hotel. Seguro e bonito de manhã.","Do hotel: a pé até République → L8 (dir. Balard) até Concorde → L12 (dir. Mairie d'Issy) até Sèvres-Babylone; 2 min a pé (~35 min).","VOLTA pra pegar as malas: L12 (dir. Aubervilliers) até Madeleine → L8 (dir. Créteil) até République. Com compras, táxi ~€15–18.","HOTEL → ORLY com 2 malas: TÁXI tarifa FIXA ~€44 (24h, malas incluídas, porta a porta, ~30–45 min). Saiam ~15h30–16h. Alternativa (~€16/pessoa): L11 (Goncourt, dir. Châtelet) → L14 (dir. Aéroport d'Orly) — precisa do bilhete 'Paris-Aéroport'. Com mala, recomendo o táxi.",""]
+};
+function mh(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
+function el(id){return document.getElementById(id);}
+function setbar(t,back){el('bt').textContent=t;el('back').style.display=back?'inline-block':'none';}
+function go(fn){window.scrollTo(0,0);fn();}
+function dayMapUrl(d){var pts=[];d.blocks.forEach(function(b){if(b.maps)pts.push(encodeURIComponent(b.maps));});return "https://www.google.com/maps/dir/"+pts.join('/');}
+
+function blockHTML(b,tr,route,openD){
+ var h='<article class="stop"><span class="num">'+(b.k||'')+'</span><h2>'+b.t+'</h2>';
+ if(b.dek)h+='<div class="dek">'+b.dek+'</div>';
+ if(b.photo)h+='<figure><img src="'+b.photo+'" alt="'+b.t+'" loading="lazy"></figure>';
+ if(b.b)h+='<p>'+b.b+'</p>';
+ if(b.hist)h+='<div class="breathe"><div class="bl">✦ Respire a história</div><p>'+b.hist+'</p></div>';
+ if(b.merch){h+='<div class="merch"><div class="ml">'+b.merch.l+'</div>';b.merch.items.forEach(function(it){h+='<div class="mi"><span>'+it[0]+(it[2]?' <a href="'+mh(it[2])+'" target="_blank" rel="noopener" style="color:#a8432c;white-space:nowrap">📍</a>':'')+'</span><b>'+it[1]+'</b></div>';});h+='</div>';}
+ if(b.foto)h+='<div class="photoq"><span class="pl">✦ Tire uma foto disto</span>'+b.foto+'</div>';
+ if(tr)h+='<details class="howto"'+(openD?' open':'')+'><summary>🚇 Como chegar</summary><div class="htext">'+tr+(route?' <a href="'+route+'" target="_blank" rel="noopener" style="color:#185a8a;white-space:nowrap">ver rota no mapa →</a>':'')+'</div></details>';
+ if(b.facts)h+='<div class="facts">'+b.facts.map(function(f){return '<span>'+f+'</span>';}).join('')+'</div>';
+ if(b.maps||b.addr){var q=b.maps||b.addr;h+='<div class="acts"><a class="map" target="_blank" rel="noopener" href="'+mh(q)+'">Abrir no mapa →</a>';if(b.addr)h+='<button class="show" data-show="'+b.addr+'">👁 mostrar</button>';h+='</div>';}
+ return h+'</article>';
+}
+function openDay(n){
+ var d=DAYS.find(function(x){return x.n===n;});
+ setbar('Dia '+n+' · '+d.wd.split(' · ')[0],true);
+ var h='<header class="cover"><img src="'+d.hero+'" alt=""><div class="grad"></div><div class="txt"><div class="kick">Dia '+d.n+' · '+d.wd+'</div><h1>'+d.title+'</h1><div class="wx">'+d.wx.t+' · '+d.wx.r+' · '+d.wx.wear+'</div></div></header>';
+ h+='<div class="col"><p class="intro">'+d.intro+'</p>';
+ h+='<div class="daybtns"><button onclick="openMapaDia('+n+')">🗺️ ver o dia no mapa</button></div>';
+ var HQ="La Planque Hotel 3 Rue Arthur Groussier 75010 Paris";
+ d.blocks.forEach(function(b,i){var tr=(TRANSIT[d.n]||[])[i]||'';var route='';if(b.maps){var orig=(i>0&&d.blocks[i-1].maps)?d.blocks[i-1].maps:HQ;route="https://www.google.com/maps/dir/"+encodeURIComponent(orig)+"/"+encodeURIComponent(b.maps);}h+=blockHTML(b,tr,route,false);});
+ h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><button class="play" data-say="'+d.phrase.fr+'" style="margin-top:10px;width:auto;border-radius:40px;padding:9px 18px;font-size:13px">🔊 ouvir</button><div class="hpt">'+d.phrase.pt+'</div></div>';
+ var p=DAYS.find(function(x){return x.n===n-1;}),nx=DAYS.find(function(x){return x.n===n+1;});
+ h+='<div class="daybtns">'+(p?'<button onclick="go(function(){openDay('+(n-1)+')})">← Dia '+(n-1)+'</button>':'<span style="flex:1"></span>')+(nx?'<button onclick="go(function(){openDay('+(n+1)+')})">Dia '+(n+1)+' →</button>':'<span style="flex:1"></span>')+'</div>';
+ h+='</div>';
+ el('app').innerHTML=h;
+}
+function openMapaDia(n){var d=DAYS.find(function(x){return x.n===n;});window.open(dayMapUrl(d),'_blank');}
+
+function essFrasario(){
+ var h='<div class="hero-phrase"><div class="hl">Comece sempre por esta</div><div class="hfr">'+PHRASES.hero.fr+'</div><div class="hpr">'+PHRASES.hero.pr+'</div><button class="play" data-say="'+PHRASES.hero.say+'" style="margin-top:12px;width:auto;border-radius:40px;padding:10px 20px;font-size:14px">🔊 ouvir</button><div class="hpt">'+PHRASES.hero.pt+'</div></div>';
+ PHRASES.cats.forEach(function(cat){h+='<div class="pcat">'+cat.c+'</div>';cat.rows.forEach(function(r){h+='<div class="prow"><div class="pmain"><div class="pfr">'+r[0]+'</div><div class="ppr">'+r[1]+'</div><div class="ppt">'+r[2]+'</div></div><button class="play" data-say="'+r[0]+'" aria-label="ouvir">🔊</button></div>';});});
+ h+='<div class="box" style="margin-top:20px;font-size:12.5px;color:var(--muted)">🔊 O som usa a voz de francês do seu celular — funciona offline. Na 1ª vez, no wi-fi, o aparelho pode baixar a voz (Ajustes › Acessibilidade no iPhone; Configurações › Idiomas no Android).</div>';
+ return h;
+}
+var ESSHTML={
+ reservas:'<p>Faltam poucos dias — os primeiros <b>esgotam</b>. Toque e reserve:</p><div class="box"><ul><li>🗼 <b>Torre Eiffel (topo)</b> €36,70 · <a href="https://www.toureiffel.paris/en" target="_blank">reservar</a></li><li>💎 <b>Sainte-Chapelle</b> €20 (€28 c/ Conciergerie) · <a href="https://www.sainte-chapelle.fr/en/" target="_blank">reservar</a> — horário obrigatório</li><li>🖼️ <b>Louvre</b> ~€22 · <a href="https://www.ticketlouvre.fr/" target="_blank">reservar</a> — fecha terça; nocturne qua/sex até 21h45</li><li>🚤 <b>Jantar no Sena</b> · <a href="https://www.bateauxparisiens.com/en/" target="_blank">Bateaux Parisiens</a> (de €99) · <a href="https://www.ducasse-seine.com/en" target="_blank">Ducasse</a> (€160+)</li><li>👑 <b>Versailles</b> €32 · <a href="https://en.chateauversailles.fr/passport-timed-entry" target="_blank">reservar</a></li><li>🎭 <b>Ópera Garnier (guiada)</b> €35 · <a href="https://www.operadeparis.fr/visites/palais-garnier" target="_blank">reservar</a></li></ul></div><p>Compra na hora: Arco do Triunfo, Cité de l\'Architecture, Bourse de Commerce.</p>',
+ metro:'<h2>O melhor passe</h2><div class="box"><ul><li><b>Sáb 27 + Dom 28</b> → bilhete avulso (€2,55) ou Navigo Jour (€12,30/dia)</li><li><b>Seg 29 → Dom 05</b> → 1 <b>Navigo Semaine €32,40</b> cada — cobre a semana ilimitado</li><li><b>Seg 06 + Ter 07</b> → bilhete avulso</li></ul></div><p>Recarregue no app <b>Bonjour RATP</b> (NFC) ou nas máquinas (têm português). <b>Valide sempre.</b></p><h2>Do aeroporto</h2><p>Orly → hotel: <b>táxi fixo €44</b> (fila oficial) ou <b>Metrô Linha 14</b> (~€14). O Orlybus não existe mais.</p><h2>Orçamento</h2><p>~<b>€80–130/pessoa/dia</b> + ingressos. Cartão por aproximação funciona em quase tudo; leve algum dinheiro pras friperies.</p>',
+ mala:'<p>Paris vai de <b>33° a 22°</b> na mesma semana, com chuva nos dias 28-29. Segredo: <b>camadas + guarda-chuva</b>.</p><ul><li>👟 1 sapato de caminhar + 1 social/elegante (eventos da Thaise e Pommery)</li><li>🧥 Camadas: camiseta + camisa/tricô + 1 blazer ou casaco leve (~15° de manhã/noite)</li><li>☂️ Guarda-chuva dobrável + capa leve</li><li>😎 Roupa leve e respirável pros 1ºs dias (32°) + óculos de sol</li><li>✨ 1 look elegante coringa (luxo + Pommery)</li><li>🔌 Adaptador França (tipo E) + power bank + bolsa antifurto</li></ul>',
+ seguranca:'<ul><li>👜 Bolsa <b>na frente do corpo</b>, fechada; carteira em bolso interno</li><li>📱 Celular nunca na mesa do café nem na mão perto do metrô</li><li>🎯 Atenção a batedor: Eiffel/Trocadéro, metrô linha 1, Châtelet, trem do aeroporto</li><li>🙅 Ignore "abaixo-assinado", "anel de ouro achado", pulseira "de presente" — golpe</li><li>🚫 Não levem o garimpo pra Barbès, Château Rouge, Stalingrad ou Gare du Nord à noite</li></ul><div class="box"><b>📞 Emergência (toque pra ligar):</b> <a href="tel:112">112</a> (geral, em inglês) · Polícia <a href="tel:17">17</a> · Bombeiros <a href="tel:18">18</a> · Ambulância <a href="tel:15">15</a>. Guardem no celular uma <b>foto do passaporte</b> e do seguro.<br><br><b>Endereço do hotel</b> (mostre ao taxista): <button class="show" data-show="La Planque Hotel, 3 Rue Arthur Groussier, 75010 Paris" style="margin-top:6px">👁 mostrar o hotel</button></div>',
+ apps:'<p>Deixem <b>tudo configurado no Brasil</b>, no wi-fi:</p><ul><li>🗺️ <b>Google Maps</b> — baixe o mapa de Paris offline; o GPS funciona sem internet</li><li>📷 <b>Google Tradutor</b> — baixe PT + FR offline; a câmera traduz cardápio e placa</li><li>🚇 <b>Bonjour RATP</b> — instale, crie a conta, recarrega o bilhete por NFC</li><li>🧭 <b>Citymapper</b> — o melhor pra navegar o metrô</li><li>📶 (opcional) <b>eSIM</b> — compre e instale agora, ativa ao pousar</li></ul>'
+};
+function openEss(key){
+ var s=ESS.find(function(x){return x.key===key;});
+ setbar(s.t,true);
+ var inner=key==='frasario'?essFrasario():ESSHTML[key];
+ el('app').innerHTML='<div class="col ess"><h2 style="margin-top:22px">'+s.e+' '+s.t+'</h2>'+inner+'</div>';
+}
+function tripDayToday(){var pairs={"2026-06-27":1,"2026-06-28":2,"2026-06-29":3,"2026-06-30":4,"2026-07-01":5,"2026-07-02":6,"2026-07-03":7,"2026-07-05":8,"2026-07-06":9,"2026-07-07":10};try{var d=new Date();var k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');return pairs[k]||null;}catch(e){return null;}}
+function printFrasario(){var h='<p style="font-size:14px"><b>'+PHRASES.hero.fr+'</b><br><span style="color:#6e6a5f">'+PHRASES.hero.pr+'</span></p>';PHRASES.cats.forEach(function(cat){h+='<div class="pcat">'+cat.c+'</div>';cat.rows.forEach(function(r){h+='<div class="mi"><span><b>'+r[0]+'</b> · <i style="color:#a8432c">'+r[1]+'</i></span><span style="color:#6e6a5f">'+r[2]+'</span></div>';});});return h;}
+function renderPrint(){
+ setbar('Versão para PDF',true);
+ var h='<div class="col"><button class="printbtn" onclick="window.print()">🖨️ Salvar como PDF (ou imprimir)</button>';
+ DAYS.forEach(function(d){h+='<section class="pday"><img class="phero" src="'+d.hero+'" alt=""><div class="kick">Dia '+d.n+' · '+d.wd+'</div><h1 class="ptitle">'+d.title+'</h1><div class="pwx">'+d.wx.t+' · '+d.wx.r+' · '+d.wx.wear+'</div><p class="intro">'+d.intro+'</p>';d.blocks.forEach(function(b,i){h+=blockHTML(b,(TRANSIT[d.n]||[])[i]||'','',true);});h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><div class="hpt">'+d.phrase.pt+'</div></div></section>';});
+ h+='<section class="pday"><h1 class="ptitle">Frasário</h1><div class="ess">'+printFrasario()+'</div></section>';
+ h+='<section class="pday"><h1 class="ptitle">Essencial</h1><div class="ess">'+ESSHTML.reservas+ESSHTML.metro+ESSHTML.mala+ESSHTML.seguranca+ESSHTML.apps+'</div></section>';
+ h+='</div>';el('app').innerHTML=h;window.scrollTo(0,0);
+}
+function renderHome(){
+ setbar('Paris',false);
+ var h='<header class="cover"><img src="img/paris.jpg" alt=""><div class="grad"></div><div class="txt"><div class="kick">Paulo & Thaise</div><h1>Paris, dia a dia</h1><div class="wx">27 de junho – 7 de julho · 2026 · guia de bolso offline</div></div></header><div class="col">';
+ var td=tripDayToday();
+ if(td)h+='<button class="today" onclick="go(function(){openDay('+td+')})">📍 É hoje — ir para o Dia '+td+'</button>';
+ h+='<button class="urgent" onclick="go(function(){openEss(\'reservas\')})">⏰ Reserve esta semana — alguns ingressos esgotam</button>';
+ h+='<div class="home-h">Os 10 dias</div>';
+ DAYS.forEach(function(d){h+='<button class="dcard" onclick="go(function(){openDay('+d.n+')})"><span class="thumb" style="background-image:url(\''+d.hero+'\')"></span><span class="di"><span class="dn">Dia '+d.n+' · '+d.wd+'</span><span class="dt">'+d.title+'</span><span class="dw">'+d.tag+'</span></span></button>';});
+ h+='<div class="home-h">Essencial</div><div class="egrid">';
+ ESS.forEach(function(s){h+='<button class="ebtn" onclick="go(function(){openEss(\''+s.key+'\')})">'+s.e+' '+s.t+'<small>'+s.sub+'</small></button>';});
+ h+='</div><button class="printbtn" onclick="go(renderPrint)">📄 Versão para PDF / imprimir</button></div>';
+ el('app').innerHTML=h;
+}
+var FRVOICE=null;
+function pickVoice(){try{var vs=window.speechSynthesis.getVoices();FRVOICE=vs.filter(function(v){return /^fr/i.test(v.lang);})[0]||null;}catch(e){}}
+if('speechSynthesis' in window){pickVoice();window.speechSynthesis.onvoiceschanged=pickVoice;}
+function speak(t){if(!('speechSynthesis' in window)){alert('O áudio funciona no navegador do celular (Safari/Chrome).');return;}window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=0.88;if(FRVOICE)u.voice=FRVOICE;window.speechSynthesis.speak(u);}
+document.addEventListener('click',function(e){
+ var s=e.target.closest('[data-say]');if(s){speak(s.getAttribute('data-say'));s.classList.add('on');setTimeout(function(){s.classList.remove('on');},700);return;}
+ var sh=e.target.closest('[data-show]');if(sh){el('showbig').textContent=sh.getAttribute('data-show');el('show').classList.add('on');}
+});
+el('back').onclick=function(){go(renderHome);};
+renderHome();
+if('serviceWorker' in navigator && location.protocol.indexOf('http')===0 && location.hostname.indexOf('localhost')<0 && location.hostname!=='127.0.0.1'){navigator.serviceWorker.register('sw.js').catch(function(){});}
+</script>
+</body>
+</html>
