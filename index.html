@@ -122,6 +122,11 @@
   .xcard .xi{padding:11px 14px}
   .xcard .xtr{font-size:12px;color:#185a8a;line-height:1.45;margin-bottom:7px}
   body.dark .xcard .xtr{color:#7fb4e0}
+  .tlist{list-style:none;margin:8px 0}
+  .tlist li{font-size:14px;color:#34312a;padding:7px 0 7px 18px;position:relative;border-bottom:1px solid var(--line);line-height:1.45}
+  .tlist li::before{content:"·";position:absolute;left:4px;color:var(--accent);font-weight:700}
+  body.dark .tlist li{color:#d8d2c6}
+  .countdown{text-align:center;font-size:13px;letter-spacing:.04em;color:var(--accent);font-weight:600;margin:14px 0 2px}
   .xcard .xt{font-weight:600;font-size:14.5px;line-height:1.2}
   .xcard .xw{font-size:12.5px;color:var(--muted);line-height:1.45;margin:4px 0 7px}
   .xcard a{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);font-weight:600;text-decoration:none}
@@ -154,7 +159,7 @@ var DAYS=[
  intro:"Hoje é leve de propósito: chegar, largar as malas, sentir o bairro e dormir cedo. Mas o sol só se põe às 22h — a tarde rende.",
  blocks:[
   {k:"09:55",t:"Pouso em Orly",b:"Vocês chegam de Madri, já dentro da Europa — em Orly NÃO tem fila de passaporte. Peguem as 2 malas e sigam pra saída."},
-  {k:"~40 min",t:"Orly → hotel",b:"Com malas e cansaço, peguem o táxi oficial na fila (placa Taxis). Tarifa FIXA €44 até essa zona. Mostrem o endereço ao motorista.",addr:"La Planque Hotel, 3 Rue Arthur Groussier, 75010 Paris",maps:"La Planque Hotel 3 Rue Arthur Groussier 75010 Paris"},
+  {k:"~40 min",t:"Orly → hotel",b:"Com malas e cansaço, peguem o táxi oficial na fila (placa Taxis). Tarifa FIXA €44 até essa zona. Aperte o 🔊 abaixo e mostre o endereço — o motorista entende.",say:"Bonjour, pouvez-vous m'emmener à cette adresse, s'il vous plaît ?",addr:"La Planque Hotel, 3 Rue Arthur Groussier, 75010 Paris",maps:"La Planque Hotel 3 Rue Arthur Groussier 75010 Paris"},
   {k:"a partir das 15h",t:"Check-in · La Planque",b:"Se o quarto não estiver pronto, deixem as malas e vão almoçar. Café da manhã incluído. M° Goncourt (linha 11), 3 min a pé.",addr:"3 Rue Arthur Groussier, 75010 Paris",maps:"La Planque Hotel 3 Rue Arthur Groussier 75010 Paris",
    hist:"Você está num pedaço de Paris que Napoleão mandou cavar: o Canal Saint-Martin foi aberto a partir de 1802 pra trazer água limpa e escoar mercadorias. Suas eclusas e passarelas de ferro arqueadas viraram cartão-postal — e cenário do filme Amélie Poulain. Hoje o 10e é descolado, de parisienses de verdade.",
    foto:"Pare numa das passarelas giratórias de ferro: quando uma barcaça passa pela eclusa, a ponte ainda gira pra liberar o caminho — engenharia do século XIX viva até hoje."},
@@ -345,6 +350,7 @@ var ESS=[
 var PHRASES={
  hero:{fr:"Bonjour ! Je ne parle pas français. Parlez-vous anglais ?",pr:"bon-JUR · je ne parl pa fran-SÉ · par-lê-VÚ an-GLÉ",pt:"“Olá! Não falo francês. Você fala inglês?” — comece sempre por esta, com um sorriso: derruba a fama de impaciência.",say:"Bonjour, je ne parle pas français, parlez-vous anglais ?"},
  cats:[
+  {c:"Chegada / táxi",rows:[["Bonjour, à cette adresse, s'il vous plaît.","bon-JUR, a sét a-DRÉS, sil vu PLÉ","Olá, a este endereço, por favor. (mostrando a tela)"],["Pouvez-vous m'emmener ici ?","pu-vê-VÚ man-mê-NÊ i-SI","Pode me levar aqui?"],["C'est combien jusqu'à l'hôtel ?","sê kon-bi-ÃN jus-KÁ lo-TÉL","Quanto fica até o hotel?"],["Gardez la monnaie.","gar-DÊ la mo-NÉ","Pode ficar com o troco."]]},
   {c:"No restaurante",rows:[["Une table pour deux, s'il vous plaît.","ün TÁBl pur DÊ","Uma mesa para dois."],["Le menu, s'il vous plaît.","le me-NÜ","O cardápio."],["Une carafe d'eau, s'il vous plaît.","ün ka-RÁF DÔ","Água da torneira, de graça."],["Je voudrais ça, s'il vous plaît.","je vu-DRÊ SÁ","Eu queria isto. (apontando)"],["L'addition, s'il vous plaît.","la-di-si-ON","A conta."]]},
   {c:"Comprar / atrações",rows:[["Deux billets, s'il vous plaît.","DÊ bi-IÊ","Dois ingressos."],["C'est combien ?","sê kon-bi-ÃN","Quanto é?"],["Vous prenez la carte ?","vu pre-NÊ la KÁRT","Aceita cartão?"],["À quelle heure fermez-vous ?","a kel ER fer-mê-VÚ","Que horas fecham?"]]},
   {c:"Brechó / provar roupa",rows:[["Je regarde, merci.","je re-GÁRD, mer-SI","Só estou olhando."],["Je peux essayer ?","je pe e-sê-IÊ","Posso provar?"],["Vous avez ma taille ?","vu-za-VÊ ma TÁI","Tem no meu tamanho?"]]},
@@ -407,6 +413,7 @@ function blockHTML(b,tr,route,openD,mg,ph){
  if(b.dek)h+='<div class="dek">'+b.dek+'</div>';
  if(ph)h+='<figure><img src="'+ph+'" alt="'+b.t+'" loading="lazy"></figure>';
  if(b.b)h+='<p>'+b.b+'</p>';
+ if(b.say)h+='<button class="play" data-say="'+b.say+'" style="margin-top:4px;width:auto;border-radius:40px;padding:8px 16px;font-size:13px">🔊 ouvir em francês</button>';
  if(b.hist)h+='<div class="breathe"><div class="bl">✦ Respire a história</div><p>'+b.hist+'</p></div>';
  if(mg)h+='<details class="dive"'+(openD?' open':'')+'><summary>📖 Mergulhe — a história a fundo</summary><div class="htext">'+mg+'</div></details>';
  if(b.merch){h+='<div class="merch"><div class="ml">'+b.merch.l+'</div>';b.merch.items.forEach(function(it){h+='<div class="mi"><span>'+it[0]+(it[2]?' <a href="'+mh(it[2])+'" target="_blank" rel="noopener" style="color:#a8432c;white-space:nowrap">📍</a>':'')+'</span><b>'+it[1]+'</b></div>';});h+='</div>';}
@@ -465,12 +472,30 @@ function renderPrint(){
  h+='<section class="pday"><h1 class="ptitle">Essencial</h1><div class="ess">'+ESSHTML.reservas+ESSHTML.metro+ESSHTML.mala+ESSHTML.seguranca+ESSHTML.apps+'</div></section>';
  h+='</div>';el('app').innerHTML=h;window.scrollTo(0,0);
 }
+var THAISE=[
+{d:"Segunda · 29 jun",t:"Abertura + Galeries Lafayette",photo:"img/galeries-lafayette.jpg",why:"O dia de abertura do curso, terminando nas Galeries Lafayette.",ag:["9h — Masterclass na escola (58 Av. de la Grande Armée): tendências 26/27 e o luxo na joalheria","13h almoço · 14h30 foto do grupo · 15h-17h revistas e MoodBoard","17h15 — Evento Sunday Riley (Galeries Lafayette, Champs-Élysées)","18h — Visita à RH Paris (23 Champs-Élysées) — o Paulo te encontra aqui"],hist:"As Galeries Lafayette nasceram em 1894 e, em 1912, ganharam a cúpula art nouveau de vidro e aço que virou símbolo de Paris — uma 'catedral do comércio'. Foi onde o luxo francês se tornou espetáculo pra todos."},
+{d:"Terça · 30 jun",t:"Boucheron na Place Vendôme",photo:"img/printemps.jpg",why:"O coração da alta joalheria mundial: a Place Vendôme.",ag:["11h — Masterclass Boucheron (26 Place Vendôme)","13h30 — Almoço Bleu Coupole (Printemps, Bd Haussmann)","15h-17h — Masterclass de joalheria no Printemps (sala Rotonde Présidence)"],hist:"Boucheron foi a PRIMEIRA joalheria a se instalar na Place Vendôme, em 1893 — Frédéric Boucheron escolheu o canto da praça que pega mais sol, pra fazer os diamantes brilharem na vitrine. Hoje as maiores maisons do mundo cercam a coluna de Napoleão. O Printemps, onde você almoça, tem uma cúpula art déco de vitrais de 1923."},
+{d:"Quarta · 01 jul",t:"Mad Lords, Vever & Samaritaine",photo:"img/samaritaine.jpg",why:"Do joalheiro rock contemporâneo ao art nouveau histórico.",ag:["9h30 — Masterclass Mad Lords (316 Rue Saint-Honoré)","15h — Masterclass Vever (9 Rue de la Paix)","17h — Visita à Samaritaine (9 Rue de la Monnaie) — o Paulo te encontra aqui"],hist:"Vever é uma das casas mais antigas de Paris (1821) e foi estrela da joalheria Art Nouveau na virada do século XX — renascida há pouco pela família. A Mad Lords é o oposto: joia contemporânea, rock, sob medida. E vocês terminam na Samaritaine, a loja-joia de vidro e ferro reaberta em 2021."},
+{d:"Quinta · 02 jul",t:"Tiffany, Dior, D&G & Pomellato",photo:"img/palais-tokyo.jpg",why:"Um desfile das maiores maisons, fechando numa expo de joias.",ag:["11h — Masterclass Tiffany & Co. (62 Champs-Élysées)","15h — Galerie Dior (11 Rue François 1er)","16h30 — Haute Joaillerie Dolce & Gabbana (54 Av. Montaigne)","19h — Exposição Pomellato (Palais de Tokyo) — o Paulo te encontra aqui"],hist:"A Tiffany (1837) inventou a 'caixa azul' e o anel de noivado com a pedra suspensa em garras, eternizado por Audrey Hepburn. A Galerie Dior, na Av. Montaigne — onde Christian Dior lançou o 'New Look' em 1947 — virou um museu da maison. A Pomellato é a joia italiana de pedras coloridas e design ousado."},
+{d:"Sexta · 03 jul",t:"La Vallée Village (compras)",why:"Dia inteiro no outlet de luxo, fora de Paris.",ag:["9h — Saída · 10h café + masterclass (consumo e sustentabilidade no luxo)","13h — Almoço incluído","17h — Transfer de volta"],hist:"La Vallée Village é o outlet de grifes a leste de Paris (perto da Disneyland), desenhado como uma ruazinha charmosa. É onde se acha alta-costura da temporada passada com bons descontos — o paraíso da garimpagem chique."},
+{d:"Sábado · 04 jul",t:"Maison Pommery",photo:"img/pommery.jpg",why:"Champagne na fonte — provável bate-volta a Reims.",ag:["Com o grupo: almoço harmonizado na Maison Pommery"],hist:"A Maison Pommery, em Reims, foi erguida por Madame Pommery no fim do séc. XIX — uma das primeiras grandes empresárias da França. Ela INVENTOU o champagne 'brut' (seco), criado para o gosto inglês, rompendo com o champagne doce da época. As caves ficam em antigas pedreiras romanas, a 30 m de profundidade."}
+];
+function openThaise(){
+ setbar('Roteiro da Thaise',true);
+ var h='<div class="col"><div style="padding:24px 0 4px"><div class="kick">👗 Para a Thaise</div><h1 style="font-family:Georgia,serif;font-weight:500;font-size:30px;margin:8px 0 6px">Seu roteiro de joalheria</h1><div class="lead">O curso LUXE LAB, dia a dia — com a história das maisons que você visita.</div></div>';
+ THAISE.forEach(function(t){h+='<article class="stop">';if(t.photo)h+='<figure><img src="'+t.photo+'" alt="'+t.t+'" loading="lazy"></figure>';h+='<span class="num">'+t.d+'</span><h2>'+t.t+'</h2><div class="dek">'+t.why+'</div><ul class="tlist">';t.ag.forEach(function(a){h+='<li>'+a+'</li>';});h+='</ul>';if(t.hist)h+='<details class="dive"><summary>📖 a história das maisons</summary><div class="htext">'+t.hist+'</div></details>';h+='</article>';});
+ h+='</div>';el('app').innerHTML=h;window.scrollTo(0,0);
+}
+function daysToTrip(){try{var now=new Date();var trip=new Date(2026,5,27);var diff=Math.ceil((trip-now)/86400000);return diff;}catch(e){return null;}}
 function renderHome(){
  setbar('Paris',false);
  var h='<header class="cover"><img src="img/paris.jpg" alt=""><div class="grad"></div><div class="txt"><div class="kick">Paulo & Thaise</div><h1>Paris, dia a dia</h1><div class="wx">27 de junho – 7 de julho · 2026 · guia de bolso offline</div></div></header><div class="col">';
+ var dd=daysToTrip();
+ if(dd&&dd>0)h+='<div class="countdown">✨ Faltam '+dd+' dia'+(dd>1?'s':'')+' para Paris</div>';
  var td=tripDayToday();
  if(td)h+='<button class="today" onclick="go(function(){openDay('+td+')})">📍 É hoje — ir para o Dia '+td+'</button>';
  h+='<button class="urgent" onclick="go(function(){openEss(\'reservas\')})">⏰ Reserve esta semana — alguns ingressos esgotam</button>';
+ h+='<button class="today" style="background:#7a2348" onclick="go(openThaise)">👗 Roteiro da Thaise — curso + maisons</button>';
  h+='<div class="home-h">Os 10 dias</div>';
  DAYS.forEach(function(d){h+='<button class="dcard" onclick="go(function(){openDay('+d.n+')})"><span class="thumb" style="background-image:url(\''+d.hero+'\')"></span><span class="di"><span class="dn">Dia '+d.n+' · '+d.wd+'</span><span class="dt">'+d.title+'</span><span class="dw">'+d.tag+'</span></span></button>';});
  h+='<div class="home-h">Essencial</div><div class="egrid">';
