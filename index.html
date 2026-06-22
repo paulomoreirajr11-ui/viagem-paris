@@ -139,6 +139,12 @@
   .moment .jhd{font-weight:700;color:#a8432c;font-size:14px;margin-bottom:3px}
   body.dark .moment .jhd{color:#d98a6f}
   .moment .jantar a.map{display:block;margin:7px 0 0}
+  .moment .jopt{display:flex;gap:11px;align-items:center;margin-top:10px;background:rgba(255,255,255,.55);border:1px solid #eccfd9;border-radius:11px;padding:8px}
+  body.dark .moment .jopt{background:rgba(0,0,0,.18);border-color:#52243a}
+  .moment .jopt img{width:90px;height:68px;object-fit:cover;border-radius:8px;flex:none}
+  .moment .joptn{font-size:13.5px;font-weight:600;color:#3f2933;line-height:1.35;margin-bottom:2px}
+  body.dark .moment .joptn{color:#ecd9e0}
+  .moment .jopt a.map{display:inline-block;margin:2px 0 0;font-size:13px}
   .xcard .xt{font-weight:600;font-size:14.5px;line-height:1.2}
   .xcard .xw{font-size:12.5px;color:var(--muted);line-height:1.45;margin:4px 0 7px}
   .xcard a{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);font-weight:600;text-decoration:none}
@@ -319,7 +325,7 @@ var DAYS=[
    facts:["grátis","fecha segunda","M° Sully-Morland"],maps:"Pavillon de l'Arsenal Paris"}
  ],phrase:{fr:"Deux billets, s'il vous plaît.",pt:"Dois ingressos, por favor."}},
 
-{n:9,wd:"Domingo · 06 jul",hero:"img/sacre-coeur.jpg",tag:"Livres a dois · arte e altura",title:"Da estação à colina",momento:"Última noite em Paris. Subam às escadarias do Sacré-Cœur no fim da tarde — toda a cidade aos seus pés, quase sempre alguém tocando violão. Fiquem pro lusco-fusco, sem pressa de descer. Foi um pacto: vocês voltam.",jantar:{t:"Jantar especial — a noite de despedida (reserve JÁ)",b:"Pra fechar a viagem com chave de ouro, reservem com alguns dias de antecedência uma destas (todas pedem reserva):",opts:[{n:"La Bonne Franquette — clássico boêmio de Montmartre, na rota de hoje",m:"La Bonne Franquette Montmartre Paris"},{n:"Le Coupe-Chou — à luz de velas, casa do séc. XVII (5e)",m:"Le Coupe-Chou Paris"},{n:"Les Ombres — rooftop com vista da Torre Eiffel",m:"Les Ombres Restaurant Quai Branly Paris"}]},
+{n:9,wd:"Domingo · 06 jul",hero:"img/sacre-coeur.jpg",tag:"Livres a dois · arte e altura",title:"Da estação à colina",momento:"Última noite em Paris. Subam às escadarias do Sacré-Cœur no fim da tarde — toda a cidade aos seus pés, quase sempre alguém tocando violão. Fiquem pro lusco-fusco, sem pressa de descer. Foi um pacto: vocês voltam.",jantar:{t:"Jantar especial — a noite de despedida (reserve JÁ)",b:"Pra fechar a viagem com chave de ouro, reservem com alguns dias de antecedência uma destas (todas pedem reserva):",opts:[{n:"La Bonne Franquette — clássico boêmio de Montmartre, na rota de hoje",m:"La Bonne Franquette Montmartre Paris",foto:"img/la-bonne-franquette.jpg"},{n:"Le Coupe-Chou — à luz de velas, casa do séc. XVII (5e)",m:"Le Coupe-Chou Paris",foto:"img/le-coupe-chou.jpg"},{n:"Les Ombres — rooftop com vista da Torre Eiffel",m:"Les Ombres Restaurant Quai Branly Paris",foto:"img/les-ombres.jpg"}]},
  wx:{t:"22° / 15°",r:"—",wear:"Mais fresco — leve uma 2ª camada. Dia de museu."},
  intro:"O último dia inteiro. Comecem entre os impressionistas, numa estação de trem virada museu, e terminem na colina mais romântica de Paris.",
  blocks:[
@@ -444,7 +450,7 @@ function openDay(n){
  var HQ="La Planque Hotel 3 Rue Arthur Groussier 75010 Paris";
  d.blocks.forEach(function(b,i){var tr=(TRANSIT[d.n]||[])[i]||'';var route='';if(b.maps){var orig=(i>0&&d.blocks[i-1].maps)?d.blocks[i-1].maps:HQ;route="https://www.google.com/maps/dir/"+encodeURIComponent(orig)+"/"+encodeURIComponent(b.maps);}h+=blockHTML(b,tr,route,false,(MERGULHE[d.n]||{})[b.t],(b.photo||(PHOTOS[d.n]||{})[b.t]));});
  h+=extrasHTML(d.n);
- if(d.momento){h+='<div class="moment"><div class="mhd">💗 Momento a dois</div><p>'+d.momento+'</p>';if(d.jantar){h+='<div class="jantar"><div class="jhd">🍷 '+d.jantar.t+'</div><p>'+d.jantar.b+'</p>';if(d.jantar.opts)d.jantar.opts.forEach(function(o){h+='<a class="map" target="_blank" rel="noopener" href="'+mh(o.m)+'">'+o.n+' →</a>';});h+='</div>';}h+='</div>';}
+ if(d.momento){h+='<div class="moment"><div class="mhd">💗 Momento a dois</div><p>'+d.momento+'</p>';if(d.jantar){h+='<div class="jantar"><div class="jhd">🍷 '+d.jantar.t+'</div><p>'+d.jantar.b+'</p>';if(d.jantar.opts)d.jantar.opts.forEach(function(o){h+='<div class="jopt">'+(o.foto?'<img src="'+o.foto+'" alt="" loading="lazy">':'')+'<div><div class="joptn">'+o.n+'</div><a class="map" target="_blank" rel="noopener" href="'+mh(o.m)+'">Abrir no mapa →</a></div></div>';});h+='</div>';}h+='</div>';}
  h+='<div class="endphrase"><div class="hl">Frase do dia</div><div class="hfr">'+d.phrase.fr+'</div><button class="play" data-say="'+d.phrase.fr+'" style="margin-top:10px;width:auto;border-radius:40px;padding:9px 18px;font-size:13px">🔊 ouvir</button><div class="hpt">'+d.phrase.pt+'</div></div>';
  var p=DAYS.find(function(x){return x.n===n-1;}),nx=DAYS.find(function(x){return x.n===n+1;});
  h+='<div class="daybtns">'+(p?'<button onclick="go(function(){openDay('+(n-1)+')})">← Dia '+(n-1)+'</button>':'<span style="flex:1"></span>')+(nx?'<button onclick="go(function(){openDay('+(n+1)+')})">Dia '+(n+1)+' →</button>':'<span style="flex:1"></span>')+'</div>';
