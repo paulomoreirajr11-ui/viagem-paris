@@ -8,7 +8,8 @@
   :root{--ink:#1a1813;--ivory:#efeae1;--accent:#a8432c;--line:#d8cfbf;--muted:#8a8170;--rose:#7a2348}
   *{box-sizing:border-box}
   body{margin:0;background:var(--ivory);color:var(--ink);font-family:-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5;-webkit-text-size-adjust:100%}
-  .wrap{max-width:780px;margin:0 auto;padding:26px 18px 80px}
+  .wrap{max-width:780px;margin:0 auto;padding:26px 18px 80px;padding-top:calc(18px + env(safe-area-inset-top,0px))}
+  .backguide{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:40px;padding:8px 15px;margin-bottom:6px}
   header.top{padding:18px 0 10px;border-bottom:2px solid var(--accent)}
   .kick{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700}
   h1{font-family:Georgia,serif;font-weight:600;font-size:30px;line-height:1.15;margin:8px 0 6px}
@@ -44,6 +45,7 @@
 <body>
 <div class="wrap">
 <header class="top">
+  <a href="./index.html" class="backguide">← Voltar ao guia</a>
   <div class="kick">🎥 Material de gravação · Paulo</div>
   <h1>Roteiro de Vídeo — a Arquitetura de Paris</h1>
   <div class="lead">Um cartão por prédio, pra você gravar sem gafe: o gancho de abertura, os fatos pra contar, o que apontar na câmera e — o mais importante — <b>o que NÃO errar</b>.</div>

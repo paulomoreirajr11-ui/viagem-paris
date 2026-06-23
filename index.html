@@ -544,7 +544,7 @@ function renderHome(){
  DAYS.forEach(function(d){h+='<button class="dcard" onclick="go(function(){openDay('+d.n+')})"><span class="thumb" style="background-image:url(\''+d.hero+'\')"></span><span class="di"><span class="dn">Dia '+d.n+' · '+d.wd+'</span><span class="dt">'+d.title+'</span><span class="dw">'+d.tag+'</span></span></button>';});
  h+='<div class="home-h">Essencial</div><div class="egrid">';
  ESS.forEach(function(s){h+='<button class="ebtn" onclick="go(function(){openEss(\''+s.key+'\')})">'+s.e+' '+s.t+'<small>'+s.sub+'</small></button>';});
- h+='</div><button class="printbtn" onclick="go(renderPrint)">📄 Versão para PDF / imprimir</button></div>';
+ h+='</div><button class="printbtn" onclick="go(renderPrint)">📄 Versão para PDF / imprimir</button><a href="roteiro-video.html" style="display:block;text-align:center;font-size:12px;color:var(--muted);margin:16px 0 0;text-decoration:none;letter-spacing:.02em">🎬 roteiro de vídeo · arquitetura (preparo)</a></div>';
  el('app').innerHTML=h;
 }
 var FRVOICE=null;
