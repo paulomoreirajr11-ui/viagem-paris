@@ -547,9 +547,30 @@ var THAISE=[
 ];
 function openThaise(focus){
  setbar('Roteiro da Thaise',true);
- var h='<div class="col"><div style="padding:24px 0 4px"><div class="kick">👗 Para a Thaise</div><h1 style="font-family:Georgia,serif;font-weight:500;font-size:30px;margin:8px 0 6px">Seu roteiro de joalheria</h1><div class="lead">Cada lugar do seu curso LUXE LAB, em detalhe — foto, endereço, história e mapa. Os 💗 marcam onde o Paulo te reencontra.</div></div>';
+ var h='<div class="col"><div style="padding:24px 0 4px"><div class="kick">👗 Para a Thaise</div><h1 style="font-family:Georgia,serif;font-weight:500;font-size:30px;margin:8px 0 6px">Seu roteiro de joalheria</h1><div class="lead">Cada lugar do seu curso LUXE LAB, em detalhe — foto, endereço, história e mapa. Os 💗 marcam onde o Paulo te reencontra.</div></div>';h+='<button class="printbtn" onclick="go(renderThaisePrint)" style="margin:0 0 10px">🖨️ Imprimir / salvar em PDF</button>';
  THAISE.forEach(function(day,di){h+='<div class="tday'+(di===0?' first':'')+'" id="tday'+di+'">'+day.d+'</div>';day.places.forEach(function(p){h+='<article class="stop">';if(p.foto)h+='<figure><img src="'+p.foto+'" alt="'+p.t+'" loading="lazy"></figure>';if(p.tm)h+='<span class="num">'+p.tm+'</span>';h+='<h2>'+p.t+'</h2>';if(p.addr)h+='<div class="dek">📍 '+p.addr+'</div>';h+='<p style="font-size:15px;line-height:1.62;margin:10px 0 2px">'+p.hist+'</p>';if(p.mais)h+='<details class="dive"><summary>📖 conhecer a fundo</summary><div class="htext">'+p.mais+'</div></details>';if(p.m)h+='<div class="acts"><a class="map" target="_blank" rel="noopener" href="'+mh(p.m)+'">Abrir no mapa →</a></div>';h+='</article>';});h+=eatHTML(day.comer);});
  h+='</div>';el('app').innerHTML=h;var _f=(typeof focus==='number')?document.getElementById('tday'+focus):null;if(_f){window.scrollTo(0,_f.getBoundingClientRect().top+window.pageYOffset-58);}else{window.scrollTo(0,0);}
+}
+function renderThaisePrint(){
+ setbar('Roteiro da Thaise — PDF',true);
+ var h='<div class="col"><button class="printbtn" onclick="window.print()">🖨️ Salvar como PDF (ou imprimir)</button>';
+ h+='<section class="pday"><div class="kick">👗 Para a Thaise</div><h1 class="ptitle">Roteiro de joalheria — LUXE LAB</h1><p class="intro">Cada lugar do curso, em detalhe: foto, endereço, a história e o aprofundamento completo. Os 💗 marcam onde o Paulo te reencontra.</p></section>';
+ THAISE.forEach(function(day){
+  h+='<section class="pday"><h1 class="ptitle" style="font-size:23px;border-bottom:1px solid #ddd;padding-bottom:6px">'+day.d+'</h1>';
+  day.places.forEach(function(p){
+   h+='<div style="page-break-inside:avoid;margin:0 0 26px">';
+   if(p.foto)h+='<img class="phero" src="'+p.foto+'" alt="">';
+   if(p.tm)h+='<div class="pwx" style="font-weight:700;color:#a8432c">'+p.tm+'</div>';
+   h+='<h2 style="font-family:Georgia,serif;font-weight:600;font-size:20px;margin:4px 0 2px">'+p.t+'</h2>';
+   if(p.addr)h+='<div class="pwx">📍 '+p.addr+'</div>';
+   h+='<p style="font-size:14.5px;line-height:1.6;margin:8px 0">'+p.hist+'</p>';
+   if(p.mais)h+='<div style="font-size:14px;line-height:1.62;margin:6px 0;color:#2c2925">'+p.mais+'</div>';
+   h+='</div>';
+  });
+  if(day.comer&&day.comer.length){day.comer.forEach(function(o){h+='<p style="font-size:14px;margin:6px 0"><b>☕ '+o.t+'</b>'+(o.d?' — '+o.d:'')+'</p>';});}
+  h+='</section>';
+ });
+ h+='</div>';el('app').innerHTML=h;window.scrollTo(0,0);
 }
 function daysToTrip(){try{var now=new Date();var trip=new Date(2026,5,27);var diff=Math.ceil((trip-now)/86400000);return diff;}catch(e){return null;}}
 function renderHome(){
